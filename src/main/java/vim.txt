@@ -1,0 +1,19 @@
+Run this before contest to store in buffer memory
+
+Replace [ with { in the current line
+:s/\[/\{/g
+
+Replace ] with } in the current line
+:s/\]/\}/g
+
+Sample Tree
+
+TreeNode root = new TreeNode(4);
+root.left = new TreeNode(2);
+root.right = new TreeNode(5);
+root.left.left = new TreeNode(1);
+root.left.right = new TreeNode(3);
+
+
+directions
+int[][] directions = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
