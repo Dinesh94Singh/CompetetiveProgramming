@@ -4,21 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
 
-class TrieNode {
-    Character ch;
-    Map<Character, TrieNode> children;
-    boolean isEnd;
-    String word;
-
-    TrieNode(final Character val) {
-        this.ch = val;
-        this.children = new HashMap<>();
-        this.isEnd = false;
-        this.word = null;
-    }
-}
-
 public class Trie {
+    static class TrieNode {
+        Character ch;
+        Map<Character, TrieNode> children;
+        boolean isEnd;
+        String word;
+
+        TrieNode(final Character val) {
+            this.ch = val;
+            this.children = new HashMap<>();
+            this.isEnd = false;
+            this.word = null;
+        }
+    }
     TrieNode root;
 
     Trie(){
