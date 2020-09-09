@@ -7,11 +7,14 @@ public class MaxChunksOfSortArray {
         final int[] nums1 = {2,4,1,6,5,9,7};
         final int[] nums2 = {4,3,2,6,1};
         final int[] nums3 = {2,1,6,4,3,7};
+        final int[] nums4 = {1, 0, 2, 3, 4};
         System.out.println(solve(nums1));
         System.out.println(solve(nums2));
         System.out.println(solve(nums3));
+        System.out.println(solve(nums4));
     }
 
+    // can cause overflow, check the constraints
     private static int solve(final int[] nums) {
         int res = 0;
         double copySum = 0, oriSum = 0;

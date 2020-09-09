@@ -1,11 +1,8 @@
 package com.company.codingscales.leetcode.concepts.graph;
 
-import com.company.codingscales.standardAlgorithms.UnionFind;
-
 import java.util.*;
 
-public class connectingCitiesWithMinimumCost {
-
+public class ConnectingCitiesWithMinimumCost {
     public class UnionFind {
         int[] parent;
         int[] rank;
@@ -45,6 +42,7 @@ public class connectingCitiesWithMinimumCost {
         }
     }
 
+    // UnionFind, DSU, Kruskals
     public int minimumCostKruskals(final int N, final int[][] connections) {
         Arrays.sort(connections, (a, b) -> (a[2] - b[2]));
         final UnionFind uf = new UnionFind(N);
@@ -63,8 +61,8 @@ public class connectingCitiesWithMinimumCost {
         return N == 1 ? res : -1;
     }
 
-    public int minimumCost(final int N, final int[][] connections)
-    {
+    // Prim's using Heap
+    public int minimumCost(final int N, final int[][] connections) {
         // prims
         final Map<Integer, List<int[]>> graph = new HashMap<>();
         final PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> a[2] - b[2]);

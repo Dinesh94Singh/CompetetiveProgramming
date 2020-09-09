@@ -1,7 +1,5 @@
 package com.company.codingscales.standardAlgorithms;
 
-import java.util.HashMap;
-
 public class UnionFind {
     int[] parent;
     int[] rank;
@@ -12,8 +10,6 @@ public class UnionFind {
     }
 
     public int find(final int c1) {
-        final HashMap<Integer, Integer> hm = new HashMap<>();
-        final Integer[] keys = (Integer [])hm.keySet().toArray();
         if(parent[c1] != c1) {
             this.parent[c1] = find(this.parent[c1]);
         }

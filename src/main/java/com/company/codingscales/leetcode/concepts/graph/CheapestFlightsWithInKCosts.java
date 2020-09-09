@@ -6,6 +6,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class CheapestFlightsWithInKCosts {
+    // Prim's algorithm
     // Note: We are not adding cycle detection code because of the input constraints k <= 100. So, this constraint will ensure, even its a cycle, to break it.
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
         Map<Integer, Map<Integer, Integer>> prices = new HashMap<>();

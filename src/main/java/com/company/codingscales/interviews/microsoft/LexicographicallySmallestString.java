@@ -8,7 +8,7 @@ public class LexicographicallySmallestString {
             return s;
 
         for (int i = 0; i < s.length() - 1; i++) {
-            if ((int) s.charAt(i) > (int) s.charAt(i + 1)) {
+            if ( s.charAt(i) >  s.charAt(i + 1)) {
                 return s.substring(0, i).concat(s.substring(i + 1));
             }
         }
