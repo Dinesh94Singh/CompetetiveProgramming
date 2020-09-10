@@ -1,4 +1,4 @@
-package com.company.codingscales.leetcode.concepts.DSU;
+package com.company.codingscales.leetcode.concepts.graph;
 
 import java.util.Arrays;
 
