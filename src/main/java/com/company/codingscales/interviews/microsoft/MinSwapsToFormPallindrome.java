@@ -53,7 +53,5 @@ public class MinSwapsToFormPallindrome {
         for(int i = 0; i < s.length(); i++) occurrence[s.charAt(i) - 'a']++;
         for (final int value : occurrence) if (value % 2 != 0) oddCount++;
         return oddCount <= 1;
-
-
     }
 }

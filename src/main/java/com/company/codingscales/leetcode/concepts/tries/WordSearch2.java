@@ -1,4 +1,4 @@
-package com.company.codingscales.leetcode.concepts.Tries;
+package com.company.codingscales.leetcode.concepts.tries;
 
 import java.util.ArrayList;
 import java.util.List;
