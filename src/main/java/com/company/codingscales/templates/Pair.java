@@ -4,6 +4,9 @@ public class Pair<U, V> {
     public U u;
     public V v;
 
+    public Pair() {
+
+    }
     public Pair(final U u, final V v) {
         this.u = u;
         this.v = v;

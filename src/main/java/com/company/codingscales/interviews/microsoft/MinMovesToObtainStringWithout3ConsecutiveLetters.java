@@ -4,7 +4,8 @@ public class MinMovesToObtainStringWithout3ConsecutiveLetters {
     private static int solve(final String input) {
         final char[] s = input.toCharArray();
         int res = 0;
-        for (int i = 0; i < s.length;) {
+        int i = 0;
+        while (i < s.length) {
             int next = i + 1;
             while (next < s.length && s[i] == s[next]) {
                 next++;

@@ -3,7 +3,6 @@ package com.company.codingscales.interviews.amazon;
 import java.util.*;
 
 public class ShoppingPatterns {
-
     public static int getMinScore(final int productNodes, final List<Integer> productsFrom, final List<Integer> productsTo) {
         final HashMap<Integer, Set<Integer>> graph = new HashMap<>();
         for(int i = 0; i < productsFrom.size(); i++) {
