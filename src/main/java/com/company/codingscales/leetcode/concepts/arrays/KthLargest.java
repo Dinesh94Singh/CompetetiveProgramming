@@ -47,37 +47,43 @@ public class KthLargest {
      * Now after choosing the pivot_index, we compare the pivot_val with all the other values, and finalize the position of pivot_val in the array.
      * If the position is the target index, we simply return it. If the target index is less than the updated-pivot-index, then it lies in the left-half, else right-half
      */
-    private static int quickSelect(final int[] nums, final int lo, final int hi, final int k) {
-        if (lo == hi) { return nums[lo]; }
+    static int dc(final int start, final int end, final int k, final int[] nums) {
+        if (start > end)
+            return -1;
 
         final Random random = new Random();
-        final int pivotIndex = random.nextInt(hi - lo) + lo; // java doesn't take range to find the random value
-        final int pivotVal = nums[pivotIndex];
+        final int pivotIndex = random.nextInt(end - start + 1) + start;
 
-        swap(nums, pivotIndex, hi);
+        swap(nums, pivotIndex, end);
 
-        int index = lo;
-        for(int i = lo; i < hi; i++) { // not comparing with val at hi, because, that's where the pivotVal lies.
-            if (nums[i] < pivotVal) {
-                swap(nums, index, i);
-                index++;
+        int j = start;
+        int i = start;
+        while (j < end) {
+            if (nums[j] < nums[end]) {
+                swap(nums, i, j);
+                i++;
             }
+            j++;
         }
-        swap(nums, index, hi); // put the pivot val at the right pos
+        swap(nums, end, i);
 
-        if (index == k) {
-            return nums[index];
-        } else if (k < index) {
-            return quickSelect(nums, lo, index - 1, k);
+        if (i == k) {
+            return nums[i];
+        } else if (i > k) {
+            return dc(start, i - 1, k, nums);
         } else {
-            return quickSelect(nums, index + 1, hi, k);
+            return dc(i + 1, end, k, nums);
         }
+    }
+
+    int quickSelect(final int[] nums,final int k) {
+        return dc(0, nums.length - 1, k, nums);
     }
 
     public static int findKthLargestUsingQuickSelect(final int[] nums, final int k) {
         // quick select works on divide-and-conquer.
         // quick select is ideally used to find the kth smallest. To find the Kth largest you can find the N - kth smallest.
         final int n = nums.length;
-        return quickSelect(nums, 0, n - 1, n - k);
+        return dc(0, n - 1, n - k, nums);
     }
 }

@@ -14,7 +14,7 @@ public class MaximalSquare {
             return cache[i][j];
         }
 
-        final int total = 1 + Math.min(Math.min(recHelper(matrix, i + 1, j, cache) , recHelper(matrix, i+1, j+1, cache)), recHelper(matrix, i, j+1, cache));
+        final int total = 1 + Math.min(Math.min(recHelper(matrix, i - 1, j, cache) , recHelper(matrix, i - 1, j - 1, cache)), recHelper(matrix, i, j - 1, cache));
         cache[i][j] = total;
         return total;
     }
