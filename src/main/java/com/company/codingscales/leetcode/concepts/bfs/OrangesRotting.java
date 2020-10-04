@@ -1,4 +1,4 @@
-package com.company.codingscales.leetcode.concepts.graph;
+package com.company.codingscales.leetcode.concepts.bfs;
 
 import java.util.ArrayDeque;
 

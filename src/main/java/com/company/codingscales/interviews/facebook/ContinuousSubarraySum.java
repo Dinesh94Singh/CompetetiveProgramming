@@ -1,7 +1,5 @@
 package com.company.codingscales.interviews.facebook;
 
-import com.company.codingscales.templates.LeetCodeInputHelpers;
-
 import java.util.HashMap;
 
 public class ContinuousSubarraySum {
@@ -63,7 +61,7 @@ public class ContinuousSubarraySum {
     }
 
     public static void main(final String[] args) {
-        System.out.println(checkSubarraySum(LeetCodeInputHelpers.stringToIntArray("[0,1,0]"), 0)); // false;
+        System.out.println(checkSubarraySum(new int[]{0}, 2)); // false;
     }
 
 }

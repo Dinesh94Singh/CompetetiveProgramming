@@ -1,6 +1,7 @@
 package com.company.codingscales.leetcode.concepts.dynamicProgramming;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class MaximumSlidingWindow {
     public int[] maxSlidingWindowBruteForce(final int[] nums, final int k) {
@@ -56,40 +57,31 @@ public class MaximumSlidingWindow {
         return output;
     }
 
-    ArrayDeque<Integer> deq = new ArrayDeque<Integer>();
-    int [] nums;
+    public static int[] slidingWindowMaximumDQ(final int[] nums, int k) {
+        final Deque<Integer> deque = new ArrayDeque<>();
 
-    public void clean_deque(final int i, final int k) {
-        if (!deq.isEmpty() && deq.getFirst() == i - k)
-            deq.removeFirst();
+        final int length = nums.length;
+        final int[] res = new int[length-k+1];
+        int j = 0;//for output array
+        for(int i = 0; i < length; i++) {
 
-        while (!deq.isEmpty() && nums[i] > nums[deq.getLast()])
-            deq.removeLast();
-    }
-
-    public int[] maxSlidingWindowSlidingWindow(final int[] nums, final int k) {
-        final int n = nums.length;
-        if (n * k == 0) return new int[0];
-        if (k == 1) return nums;
-
-        // init deque and output
-        this.nums = nums;
-        int max_idx = 0;
-        for (int i = 0; i < k; i++) {
-            clean_deque(i, k);
-            deq.addLast(i);
-            // compute max in nums[:k]
-            if (nums[i] > nums[max_idx]) max_idx = i;
+            //while we pass through the array at every step we need to check 2 things
+            //1. if a[i] > q.peekLast(), then we poll and add the larger number
+            while(!deque.isEmpty() && nums[i] > nums[deque.peekLast()]) {
+                deque.pollLast();
+            }
+            //2.if out of range,
+            while(!deque.isEmpty() && k < i - deque.peek() + 1) {
+                deque.poll();
+            }
+            //add to the queue
+            deque.offer(i);
+            //when do we add to the output
+            if(i >= k-1) {
+                res[j] = nums[deque.peek()];
+                j++;
+            }
         }
-        final int [] output = new int[n - k + 1];
-        output[0] = nums[max_idx];
-
-        // build output
-        for (int i  = k; i < n; i++) {
-            clean_deque(i, k);
-            deq.addLast(i);
-            output[i - k + 1] = nums[deq.getFirst()];
-        }
-        return output;
+        return  res;
     }
 }
