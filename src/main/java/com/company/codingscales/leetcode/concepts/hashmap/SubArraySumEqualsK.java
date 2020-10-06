@@ -1,9 +1,11 @@
 package com.company.codingscales.leetcode.concepts.hashmap;
 
-import com.company.codingscales.templates.LeetCodeInputHelpers;
-
 import java.util.HashMap;
 
+/**
+ * Given an array of integers and an integer k,
+ * you need to find the total number of continuous sub-arrays whose sum equals to k.
+ */
 public class SubArraySumEqualsK {
     public static int subarraySum(final int[] nums, final int k) {
         final HashMap<Integer, Integer> hm = new HashMap<>();
@@ -15,8 +17,8 @@ public class SubArraySumEqualsK {
             sum += nums[i];
             System.out.print("index " + i + " Sum => " + sum + " hm => " + hm + " Diff => " + (sum - k));
 
-            if (hm.containsKey(sum - k)) {
-                count += hm.get(sum - k);
+            if (hm.containsKey(sum - k)) { // sum1 + sum2 == k => sum2 => sum1 - k
+                count += hm.get(sum - k); // increment count, by total number of occ
             }
 
             if (hm.containsKey(sum)) {
@@ -32,8 +34,8 @@ public class SubArraySumEqualsK {
     }
 
     public static void main(final String[] args) {
-        System.out.println(subarraySum(LeetCodeInputHelpers.stringToIntArray("[3,4,7,2,-3,1,4,2]"), 7));
-        System.out.println(subarraySum(LeetCodeInputHelpers.stringToIntArray("[3,4,7,2,-3,1,4,2]"), 100));
+        System.out.println(subarraySum(new int[]{3,4,7,2,-3,1,4,2}, 7));
+        System.out.println(subarraySum(new int[]{3,4,7,2,-3,1,4,2}, 100));
     }
 
 }
