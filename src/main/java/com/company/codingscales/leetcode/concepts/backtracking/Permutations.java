@@ -12,7 +12,7 @@ public class Permutations {
     /**
      * Swap each element from i => N with ith element and do dfs i + 1th step
      */
-    void dfs(int i, int[] nums) {
+    void dfs(final int i, final int[] nums) {
         if (i == nums.length) {
             res.add(Arrays.stream(nums).boxed().collect(Collectors.toList()));
             return;
@@ -25,13 +25,13 @@ public class Permutations {
         }
     }
 
-    void swap(int[] nums, int i, int j) {
-        int t = nums[i];
+    static void swap(final int[] nums, final int i, final int j) {
+        final int t = nums[i];
         nums[i] = nums[j];
         nums[j] = t;
     }
 
-    public List<List<Integer>> permute(int[] nums) {
+    public List<List<Integer>> permute(final int[] nums) {
         dfs(0, nums);
         return res;
     }
