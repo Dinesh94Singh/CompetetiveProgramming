@@ -2,6 +2,7 @@ package com.company.codingscales.leetcode.concepts.design;
 
 import java.util.ArrayDeque;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.PriorityQueue;
 
 public class TextEditor {
@@ -44,9 +45,9 @@ public class TextEditor {
 
             final Text text = (Text) o;
 
-            if (val != null ? !val.equals(text.val) : text.val != null) return false;
+            if (!Objects.equals(val, text.val)) return false;
             if (!timeStamp.equals(text.timeStamp)) return false;
-            return operation != null ? operation.equals(text.operation) : text.operation == null;
+            return Objects.equals(operation, text.operation);
         }
 
         @Override
