@@ -20,9 +20,9 @@ public class PalindromePartitioning {
         }
 
         // we now have the all indexes where palindrome can be formed.
-        // if pallindrome is formed because of the end => Then min cuts = 0;
-        // if pallindrome is formed because of the starting => Then min cuts = 0;
-        // else there are 1 cuts atleast;
+        // if palindrome is formed because of the end => Then min cuts = 0;
+        // if palindrome is formed because of the starting => Then min cuts = 0;
+        // else there are 1 cuts at-least;
 
         int[] cuts = new int[s.length()];
         for(int i = s.length() - 1; i >= 0; i--) {

@@ -31,7 +31,7 @@ public class CoinChange {
 
     int solveBottomUp(final int[] nums, final int capacity) {
         final int n = nums.length;
-        Integer[][] dp = new Integer[n][capacity + 1];
+        final Integer[][] dp = new Integer[n][capacity + 1];
 
         for(int i = 0; i < n; i++) {
             dp[i][0] = 1;
