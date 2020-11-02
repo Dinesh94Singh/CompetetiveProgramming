@@ -52,7 +52,7 @@ public class Prims {
     // returns 1 if curr.key > other.key
     // returns -1 if curr.key < other.key and
     // returns 0 otherwise
-    class  comparator implements Comparator<GraphNode> {
+    class comparator implements Comparator<GraphNode> {
 
         @Override
         public int compare(final GraphNode curr, final GraphNode other) {
