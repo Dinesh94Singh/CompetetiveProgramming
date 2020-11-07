@@ -1,75 +1,62 @@
 package com.company.codingscales.interviews.amazon;
 
+import java.util.List;
+
 public class DistanceBetweenNodesInBST {
     // CREATE BST FROM LIST OF NUMS
-    static class TreeNode {
+    static class Node {
+        public Node left;
+        public Node right;
         int val;
-        TreeNode left;
-        TreeNode right;
 
-        TreeNode(int v) {
-            val = v;
-            left = null;
-            right = null;
+        public Node(int val) {
+            this.left = null;
+            this.right = null;
+            this.val = val;
         }
+
     }
 
-    private static TreeNode buildBST(TreeNode root, int node) {
-        if (root == null) {
-            root = new TreeNode(node);
+    public int constructBSTAndDistanceBetweenNode(List<Integer> nums, int node1, int node2) {
+        Node root = null;
+        for (int i = 0; i < nums.size(); i++) {
+            root = buildBst(root, nums.get(i));
+        }
+
+        Node LCA = findLCA(root, node1, node2);
+        return distanceBetween(LCA, node1) + distanceBetween(LCA, node2);
+
+    }
+
+    public Node findLCA(Node root, int node1, int node2) {
+        if (node1 > root.val && node2 > root.val)
+            return findLCA(root.right, node1, node2);
+        else if (node1 < root.val && node2 < root.val)
+            return findLCA(root.left, node1, node2);
+        else
             return root;
-        } else if (root.val < node) {
-            if (root.right == null)
-                root.right = new TreeNode(node);
-            else
-                buildBST(root.right, node);
-        } else if (root.val > node) {
-            if (root.left == null)
-                root.left = new TreeNode(node);
-            else
-                buildBST(root.left, node);
+    }
+
+    public int distanceBetween(Node LCA, int val) {
+        if (LCA.val == val)
+            return 0;
+        if (val > LCA.val) {
+            return distanceBetween(LCA.right, val) + 1;
+        } else {
+            return distanceBetween(LCA.left, val) + 1;
         }
 
+    }
+
+    public Node buildBst(Node root, int val) {
+        if (root == null) {
+            return new Node(val);
+        }
+
+        if (val < root.val)
+            root.left = buildBst(root.left, val);
+        else
+            root.right = buildBst(root.right, val);
         return root;
-    }
-
-    public static int findDistance(int[] nums, int i, int j) {
-        TreeNode root = null;
-        for(int k = 0; k < nums.length; k++) {
-            root = buildBST(root, nums[k]);
-        }
-
-        TreeNode lca = findLCA(root, i, j);
-        int distance = findDistanceFromLCA(lca, i) + findDistanceFromLCA(lca, j);
-        return distance;
-    }
-
-    private static TreeNode findLCA(TreeNode root, int i, int j) {
-        while (true) {
-            if (root.val > i && root.val > j)
-                root = root.left;
-            else if (root.val < i && root.val < j)
-                root = root.right;
-            else
-                return root;
-        }
-    }
-
-    private static int findDistanceFromLCA(TreeNode lca, int i) {
-        int distanceSum = 0;
-
-        while (lca != null) {
-            if (lca.val == i)
-                return distanceSum;
-            else if (lca.val < i) {
-                distanceSum++;
-                lca = lca.right;
-            } else {
-                distanceSum++;
-                lca = lca.left;
-            }
-        }
-
-        return distanceSum;
     }
 }

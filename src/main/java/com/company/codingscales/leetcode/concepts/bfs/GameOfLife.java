@@ -1,6 +1,13 @@
 package com.company.codingscales.leetcode.concepts.bfs;
 
 public class GameOfLife {
+    /*
+        // 1 - live, 0 - dead
+        // 1 - 1 (1) (prev alive - now alive) (2 or 3 pop) - stays alive
+        // 0 - 0 (0) (prev dead - now dead)
+        // 0 - 1 (prev dead - now alive) (-1)
+        // 1 - 0 (2) (prev alive - now dead) (under pop)
+     */
     public static void gameOfLife(final int[][] board) {
         final int R = board.length;
         final int C = R > 0 ? board[0].length : 0;

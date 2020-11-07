@@ -1,6 +1,17 @@
 package com.company.codingscales.leetcode.concepts.dynamicProgramming;
 
 public class KnightProbability {
+    /**
+     *
+     *              -1, 2          1, 2
+     *            -2, 1               2, 1
+     *                      0, 0
+     *            -2, -1              2, -1
+     *                -1, -2      1, -2
+     *
+     *
+     *
+     */
     private static final int[][]dir = new int[][]{{-2,-1},{-1,-2},{1,-2},{2,-1},{2,1},{1,2},{-1,2},{-2,1}};
     private static double[][][] dp;
 

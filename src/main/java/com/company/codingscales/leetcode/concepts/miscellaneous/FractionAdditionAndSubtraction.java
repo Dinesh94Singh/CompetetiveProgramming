@@ -23,6 +23,7 @@ public class FractionAdditionAndSubtraction {
         return new int[] {numerator / gcd, denominator / gcd};
     }
 
+    // euclidean algorithm - https://en.wikipedia.org/wiki/Euclidean_algorithm
     private static int gcd(int a, int b) {
         if (a == 0)
             return b;
@@ -30,6 +31,16 @@ public class FractionAdditionAndSubtraction {
             return a;
 
         return gcd(b, a % b);
+    }
+
+    private static int gcdIterative(int a, int b) {
+        while (a != b) {
+            if (a > b)
+                a = a - b;
+            else
+                b = b - a;
+        }
+        return a;
     }
 
     private static int[] serialize(final String num) {

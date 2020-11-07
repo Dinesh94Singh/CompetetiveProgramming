@@ -7,8 +7,8 @@ public class FractionToRecurringDecimal {
     // which would be a dp problem and return that part wrapped in ()
 
     public String fractionToDecimal(int n, int d) {
-        long numerator = Long.valueOf(n);
-        long denominator = Long.valueOf(d);
+        long numerator = (long) n;
+        long denominator = (long) d;
         if (numerator == 0)
             return "0";
 
