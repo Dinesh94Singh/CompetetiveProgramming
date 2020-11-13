@@ -1,20 +1,20 @@
 package com.company.codingscales.interviews.goldmansachs;
 
 public class ReachingPoints {
-    public boolean reachingPointsBT(int sx, int sy, int tx, int ty) {
+    public boolean reachingPointsBT(int sx, int sy, int tx, int ty) { // O(2^tx+ty),
         if (sx > tx || sy > ty) return false;
         if (sx == tx && sy == ty) return true;
         return reachingPointsBT(sx+sy, sy, tx, ty) || reachingPointsBT(sx, sx+sy, tx, ty);
     }
 
-    public boolean reachingPointsDP(int sx, int sy, int tx, int ty) {
+    public boolean reachingPointsDP(int sx, int sy, int tx, int ty) { // O(tx∗ty)
         // you can remember the outcome if you already covered a branch = use memo of (tx, ty)
         return false;
     }
 
     // from x, y => we will go to (x + y, y) or (x, y + x)
     // going backwards, so => (x - y, y) or (x, y - x)
-    public boolean reachingPointsBackwards(int sx, int sy, int tx, int ty) {
+    public boolean reachingPointsBackwards(int sx, int sy, int tx, int ty) { // O(max(tx,ty))
         while (tx >= sx && ty >= sy) {
             if (sx == tx && sy == ty)
                 return true;
@@ -52,7 +52,7 @@ public class ReachingPoints {
         return tx == sx && ty == sy;
     }
 
-    public boolean reachingPointsSimpler(int sx, int sy, int tx, int ty) {
+    public boolean reachingPointsSimpler(int sx, int sy, int tx, int ty) { // O(log(max(tx,ty)))
         while (sx < tx && sy < ty) {
             if (tx < ty) ty %= tx;
             else tx %= ty;
