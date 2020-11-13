@@ -18,7 +18,7 @@ public class CoinChange {
             total += dfs(index, nums, capacity - nums[index]);
         }
 
-        total += dfs(index, nums, capacity);
+        total += dfs(index + 1, nums, capacity);
         dp[index][capacity] = total;
         return total;
     }

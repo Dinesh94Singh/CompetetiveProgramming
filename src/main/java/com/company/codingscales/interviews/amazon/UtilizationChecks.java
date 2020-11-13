@@ -10,11 +10,13 @@ public class UtilizationChecks {
         while (i < n) {
             int curr = averageUtilization.get(i);
             if (curr < 25 && instances > 1) {
-                instances /= 2;
+                instances = instances % 2 == 0 ? instances / 2 : (instances / 2 + 1);
                 i+= 10;
-            } else if (curr > 60 && instances < LIMIT) {
+                i++;
+            } else if (curr > 60 && instances  * 2 < LIMIT) {
                 instances *= 2;
                 i+= 10;
+                i++;
             } else {
                 i++;
             }

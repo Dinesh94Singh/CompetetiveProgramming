@@ -23,6 +23,29 @@ public class DecodeWays {
 
     HashMap<Integer, Integer> dp = new HashMap<>();
 
+    public int rec_helper(String  str, int index, int[] cache) {
+        if (index == str.length()) {
+            return 1;
+        }
+
+        if (cache[index] != -1) {
+            return cache[index];
+        }
+
+        if (str.charAt(index) == '0') {
+            return 0;
+        }
+        //one digit
+        int res = rec_helper(str,index+1,cache);
+
+        //2 digit
+        if(index < str.length() - 1 && Integer.parseInt(str.substring(index,index+2)) <= 26) {
+            res += rec_helper(str,index+2,cache);
+        }
+        cache[index] = res;
+        return res;
+    }
+
     private int dfs(int index, String s) {
         if (index >= s.length())
             return 1;

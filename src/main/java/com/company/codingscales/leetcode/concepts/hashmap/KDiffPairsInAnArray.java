@@ -42,7 +42,7 @@ public class KDiffPairsInAnArray {
                 // List item 3 in the text
                 left++;
                 result++;
-                while (left < nums.length && nums[left] == nums[left - 1])
+                while (left < nums.length && nums[left] == nums[left - 1]) // skip duplicates
                     left++;
             }
         }

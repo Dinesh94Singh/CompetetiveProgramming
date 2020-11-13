@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PalindromeStringPartitions {
+    static int count = 0;
     private static boolean checkPalindrome(final String s) {
         if (s.isEmpty()) { return false; }
         int i = 0, j = s.length() - 1;
@@ -32,13 +33,17 @@ public class PalindromeStringPartitions {
     }
 
     public static List<List<String>> partition(final String s) {
+        count = 0;
         final List<List<String>> res = new ArrayList<>();
         recHelper(s, new ArrayList<String>(), res);
+        System.out.println("Size is " + count);
         return res;
     }
 
 
     public static void main(String[] args) {
         System.out.println(partition("aab"));
+        System.out.println(partition("aaa"));
+        System.out.println(partition("abc"));
     }
 }
