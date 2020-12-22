@@ -58,7 +58,7 @@ public class EqualSubsetSumPartition {
                 dp[i][j] = dp[i-1][j];
                 if (dp[i - 1][j]) {
                     dp[i][j] = true;
-                } else if (nums[i] <= capacity) {
+                } else if (nums[i] <= j) {
                     dp[i][j] = dp[i-1][j - nums[i]];
                 }
             }

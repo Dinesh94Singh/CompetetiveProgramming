@@ -144,7 +144,7 @@ public class TextEditor {
             sb.append(t.val);
         }
 
-        return sb.toString().strip();
+        return sb.toString();
     }
 
     public static void main(String[] args) {

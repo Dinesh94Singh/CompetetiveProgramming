@@ -38,14 +38,16 @@ public class Knapsack {
     // f(i, c) = max(f(i-1, c), profits[i] + f(i-1, c-weights[i])
     // c = capacity
 
+    // dp[i][c] => for capacity 'c'  all the profit's attained till item i.
     static int solve_BottomUp(final int[] weights, final int[] profits, final int capacity) {
         final Integer[][] dp = new Integer[weights.length][capacity + 1];
-        for(int i = 0; i < weights.length; i++) {
+        for(int i = 0; i < weights.length; i++) { // for capacity == 0
             dp[i][0] = 0;
         }
 
         for(int j = 1; j <= capacity; j++) {
-            dp[0][j] = profits[0];
+            if(weights[0] <= j) // should we only add if weights[0] <= j
+                dp[0][j] = profits[0];
         }
 
         for(int i = 1; i < weights.length; i++) {

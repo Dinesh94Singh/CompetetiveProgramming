@@ -1,5 +1,8 @@
 package com.company.codingscales.leetcode.concepts.strings;
 
+/**
+ * Similar to {@link com.company.codingscales.leetcode.concepts.backtracking.RobotRoomCleaner}
+ */
 public class RobotReturnToOrigin {
     public boolean returnToOrigin(String moves) {
         if (moves.isEmpty())

@@ -37,7 +37,7 @@ public class ReachingPoints {
             if (tx > ty) { // either decrease tx by (tx - ty) until tx % ty; // instead of linear, we hop multiple steps
                 if (ty > sy) { // we can only hop when ty > sy. If tx > ty && ty == sy ==> we only need to check one branch where tx = tx % ty;
                     tx = tx % ty;
-                } else {
+                } else { // there aren't enuf hops, so just do, 1 hop on tx, on the remaining dist and see, if u can cover in 1 hop => return T/F
                     return (tx - sx) % ty == 0;
                 }
             } else { // similarly for ty as well.

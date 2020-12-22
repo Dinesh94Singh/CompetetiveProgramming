@@ -1,5 +1,8 @@
 package com.company.codingscales.leetcode.concepts.strings;
 
+/**
+ * Similar to {@link com.company.codingscales.leetcode.concepts.backtracking.RobotRoomCleaner}
+ */
 public class RobotBoundedInCircle {
     public static boolean isRobotBounded(String instructions) {
         if (instructions.isEmpty())

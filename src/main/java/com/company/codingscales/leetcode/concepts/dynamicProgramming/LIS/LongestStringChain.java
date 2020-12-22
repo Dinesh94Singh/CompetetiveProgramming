@@ -1,4 +1,4 @@
-package com.company.codingscales.leetcode.concepts.dynamicProgramming;
+package com.company.codingscales.leetcode.concepts.dynamicProgramming.LIS;
 
 import java.util.Arrays;
 import java.util.HashMap;

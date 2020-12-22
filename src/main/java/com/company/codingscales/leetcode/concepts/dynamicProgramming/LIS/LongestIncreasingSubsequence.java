@@ -1,4 +1,6 @@
-package com.company.codingscales.leetcode.concepts.dynamicProgramming.longestStrings;
+package com.company.codingscales.leetcode.concepts.dynamicProgramming.LIS;
+
+import java.util.Arrays;
 
 public class LongestIncreasingSubsequence {
     static int[][] dp;
@@ -21,12 +23,10 @@ public class LongestIncreasingSubsequence {
 
     static int LISBottomUp(int[] nums) {
         final int dp[] = new int[nums.length + 1];
-        dp[0] = 1;
-
+        Arrays.fill(dp, 1);
         int maxLength = Integer.MIN_VALUE;
 
         for(int i = 1; i < nums.length; i++) {
-            dp[i] = 1; // longest path could be atleast 1
             for(int j = 0; j < i; j++) {
                 if (nums[i] > nums[j] && dp[i] <= dp[j]) {
                     dp[i] = dp[j] + 1;
@@ -37,5 +37,4 @@ public class LongestIncreasingSubsequence {
 
         return maxLength;
     }
-
 }

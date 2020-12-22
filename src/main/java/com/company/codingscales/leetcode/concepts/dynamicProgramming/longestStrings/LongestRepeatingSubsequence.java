@@ -1,5 +1,8 @@
 package com.company.codingscales.leetcode.concepts.dynamicProgramming.longestStrings;
 
+/**
+ * LongestRepeatingSubsequence & LongestDuplicateSubsequence are the same
+ */
 public class LongestRepeatingSubsequence {
     static Integer[][] dp;
 
