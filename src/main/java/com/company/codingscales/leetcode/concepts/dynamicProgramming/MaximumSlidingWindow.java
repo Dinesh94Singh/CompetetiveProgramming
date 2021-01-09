@@ -57,6 +57,7 @@ public class MaximumSlidingWindow {
         return output;
     }
 
+    // Prefer this solution
     public static int[] slidingWindowMaximumDQ(final int[] nums, int k) {
         final Deque<Integer> deque = new ArrayDeque<>();
 

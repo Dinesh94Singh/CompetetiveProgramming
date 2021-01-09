@@ -1,4 +1,4 @@
-package com.company.codingscales.leetcode.concepts.dynamicProgramming;
+package com.company.codingscales.leetcode.concepts.dynamicProgramming.minimax;
 
 import com.company.codingscales.templates.LeetCodeInputHelpers;
 

@@ -1,4 +1,4 @@
-package com.company.codingscales.leetcode.concepts.dynamicProgramming;
+package com.company.codingscales.leetcode.concepts.dynamicProgramming.prefixsums;
 
 import java.util.Arrays;
 
