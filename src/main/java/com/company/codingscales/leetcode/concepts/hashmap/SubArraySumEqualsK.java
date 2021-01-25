@@ -5,6 +5,8 @@ import java.util.HashMap;
 /**
  * Given an array of integers and an integer k,
  * you need to find the total number of continuous sub-arrays whose sum equals to k.
+ *
+ * Bruteforce - O(n3). Cumulative Sum - O(n2). Divide and Conquer - O(NLogN). HM - O(N)
  */
 public class SubArraySumEqualsK {
     public static int subarraySum(final int[] nums, final int k) {

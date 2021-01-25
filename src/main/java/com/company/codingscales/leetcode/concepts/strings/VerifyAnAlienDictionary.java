@@ -24,7 +24,7 @@ public class VerifyAnAlienDictionary {
                 }
             }
 
-            if (j == word2.length())
+            if (j == word2.length() && j != word1.length())
                 return false;
         }
 

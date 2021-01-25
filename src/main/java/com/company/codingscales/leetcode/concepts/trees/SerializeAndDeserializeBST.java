@@ -1,39 +1,49 @@
 package com.company.codingscales.leetcode.concepts.trees;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class SerializeAndDeserializeBST {
-    String serialize(final int[] arr) {
-       return null;
-    }
-
-    private TreeNode recHelper(final int left, final int right, final ArrayDeque<Integer> arrayDeque) {
-        if (arrayDeque.isEmpty())
-            return null;
-        if (arrayDeque.peekLast() < left || arrayDeque.peekLast() > right)
-            return null;
-
-        final Integer val = arrayDeque.removeLast();
-        final TreeNode node = new TreeNode(val);
-
-        node.right = recHelper(val, right, arrayDeque);
-        node.left = recHelper(left, val, arrayDeque);
-        return node;
-    }
-
-    TreeNode deserialize(final Integer[] arr) {
-        final ArrayDeque<Integer> deque = new ArrayDeque<>();
-        deque.addAll(Arrays.asList(arr));
-        return recHelper(Integer.MIN_VALUE, Integer.MAX_VALUE, deque);
-    }
-
-    TreeNode deserialize(final String serializedData) {
-        final String[] data = serializedData.split(",");
-        final ArrayDeque<Integer> deque = new ArrayDeque<>();
-        for(final String s: data) {
-            deque.add(Integer.parseInt(s));
+    public void encoderHelper(TreeNode root, ArrayList<Integer> al) {
+        if (root == null) {
+            return;
         }
-        return recHelper(Integer.MIN_VALUE, Integer.MAX_VALUE, deque);
+
+        al.add(root.val);
+        encoderHelper(root.left, al);
+        encoderHelper(root.right, al);
+    }
+
+    public String serialize(TreeNode root) {
+        if (root == null)
+            return null;
+        ArrayList<Integer> al = new ArrayList<>();
+        encoderHelper(root, al);
+        return al.stream().map(String::valueOf).collect(Collectors.joining(","));
+    }
+
+    static int index = 0;
+
+    public TreeNode decoderHelper(String[] data, int lo, int hi) {
+        if (data.length == index)
+            return null;
+        int x = Integer.parseInt(data[index]);
+        if (x < lo || x > hi)
+            return null;
+        TreeNode curr = new TreeNode(x);
+        index++;
+        curr.left = decoderHelper(data, lo, x);
+        curr.right = decoderHelper(data, x, hi);
+
+        return curr;
+    }
+
+    public TreeNode deserialize(String data) {
+        if (data == null)
+            return null;
+        String[] words = data.split(",");
+        System.out.println(words.length + " !! ");
+        index = 0;
+        return decoderHelper(words, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 }

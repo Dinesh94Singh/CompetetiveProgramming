@@ -1,6 +1,6 @@
 package com.company.codingscales.leetcode.concepts.strings;
 
-public class MultipleStrings {
+public class MultiplyStrings {
     public static String multiply(final String num1, final String num2) {
         final int[] res = new int[num1.length() + num2.length()];
         final StringBuilder n1 = new StringBuilder(num1);

@@ -1,77 +1,60 @@
 package com.company.codingscales.leetcode.concepts.dynamicProgramming;
 
-import java.util.HashMap;
-
 public class DecodeWays {
-    private static int recHelper(final int i, final String s) {
-        if (i == s.length()) {
+    static int[] dp;
+    private static int recHelper(int index, String s) {
+        if (index == s.length())
             return 1;
-        } else if (i > s.length()) {
-            return 0;
-        }
-
-        final int x = Integer.parseInt(s.substring(i, Math.min(s.length(), i + 2)));
-
-        if (x == 10) {
-            return recHelper(i + 2, s);
-        } else if (x > 27) {
-            return recHelper(i + 1, s);
-        }
-
-        return recHelper(i + 1, s) + recHelper(i + 2, s);
-    }
-
-    HashMap<Integer, Integer> dp = new HashMap<>();
-
-    public int rec_helper(String  str, int index, int[] cache) {
-        if (index == str.length()) {
-            return 1;
-        }
-
-        if (cache[index] != -1) {
-            return cache[index];
-        }
-
-        if (str.charAt(index) == '0') {
-            return 0;
-        }
-        //one digit
-        int res = rec_helper(str,index+1,cache);
-
-        //2 digit
-        if(index < str.length() - 1 && Integer.parseInt(str.substring(index,index+2)) <= 26) {
-            res += rec_helper(str,index+2,cache);
-        }
-        cache[index] = res;
-        return res;
-    }
-
-    private int dfs(int index, String s) {
-        if (index >= s.length())
-            return 1;
-
-        if (dp.containsKey(index))
-            return dp.get(index);
-
-        if (s.charAt(index) == '0')
+        if (index > s.length())
             return 0;
 
-        int ways = 0;
-        ways += dfs(index + 1, s);
+        if (dp[index] != 0)
+            return dp[index];
+
+        char ch = s.charAt(index);
+        if (ch == '0')
+            return 0;
 
         if (index < s.length() - 1) {
-            int number = Integer.parseInt(s.substring(index, index + 2));
+            int twoDigitNumber = Character.getNumericValue(ch) * 10 + Character.getNumericValue(s.charAt(index + 1));
 
-            if (number >= 10 && number <= 26)
-                ways += dfs(index + 2, s);
+            if (twoDigitNumber == 10) {
+                dp[index] = recHelper(index + 2, s); return dp[index];
+            } else if (twoDigitNumber >= 27) {
+                dp[index] = recHelper(index + 1, s); return dp[index];
+            }
         }
 
-        dp.put(index, ways);
-        return dp.get(index);
+        dp[index] = recHelper(index + 1, s) + recHelper(index + 2, s);
+        return dp[index];
     }
 
-    public static int numDecodings(final String s) {
+
+    public static int numDecodings(String s) {
+        dp = new int[s.length()];
         return recHelper(0, s);
+    }
+
+    public static int numDecodingsDP(String s) {
+        if (s == null || s.isEmpty())
+            return 0;
+
+        int[] dp = new int[s.length() + 1];
+        dp[0] = 1;
+        dp[1] = s.charAt(0) == '0' ? 0 : 1;
+
+        for(int i = 2; i < dp.length; i++) {
+            if (s.charAt(i - 1) != '0') {
+                dp[i] += dp[i - 1];
+            }
+
+            int twoDigit = Integer.parseInt(s.substring(i - 2, i));
+
+            if (twoDigit >= 10 && twoDigit <= 26)
+                dp[i] += dp[i - 2];
+        }
+
+        return dp[s.length()];
     }
 
     public static void main(final String[] args) {

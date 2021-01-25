@@ -43,9 +43,9 @@ public class MaximalSquare {
         final int R = matrix.length;
         final int C = R > 0 ? matrix[0].length : 0;
         int maximum = Integer.MIN_VALUE;
-        final int[][] cache = new int[R][C];
-        for(int i = 1; i < R; i++) {
-            for(int j = 1; j < C; j++) {
+        final int[][] cache = new int[R + 1][C + 1];
+        for(int i = 1; i <= R; i++) {
+            for(int j = 1; j <= C; j++) {
                 if (matrix[i - 1][j - 1] == '1') {
                     cache[i][j] = Math.min(Math.min(cache[i-1][j], cache[i][j-1]), cache[i-1][j-1]) + 1;
                     maximum = Math.max(maximum, cache[i][j]);
@@ -58,6 +58,5 @@ public class MaximalSquare {
     public static void main(final String[] args) {
         final char[][] matrix = new char[][] {{'1','0','1','0','0'},{'1','0','1','1','1'},{'1','1','1','1','1'},{'1','0','0','1','0'}};
         System.out.println(maximalSquare(matrix));
-
     }
 }

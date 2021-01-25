@@ -22,13 +22,13 @@ public class DeleteNodeInBST {
 
     private TreeNode getPredecessor(TreeNode node) {
         // left subtree's left node
-        /* Deleting 50 => find the succ => 55 (right subtrees left most node)
-           succ of 3 is None, you delete the node directly
+        /* Deleting 55 => find the pred => 53 (left subtrees right most node)
+           pred of 55 is 53. => update the value to 53 and recursively delete. If pred is null, set node as null
                         4
                   2             50
                1      3              77
                                 55
-                            53     56
+                            53
          */
 
         TreeNode pred = node.left;

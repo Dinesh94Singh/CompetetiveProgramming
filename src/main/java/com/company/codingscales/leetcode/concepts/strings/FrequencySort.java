@@ -25,9 +25,9 @@ public class FrequencySort {
         Collections.sort(sortedValues, Comparator.reverseOrder());
 
         StringBuilder sb = new StringBuilder();
-        for(final Integer occurence : sortedValues) {
-            for (Character ch : reverseMap.getOrDefault(occurence, new LinkedHashSet<>())) {
-                for(int i = 0; i < occurence; i++)
+        for(final Integer occurrence : sortedValues) {
+            for (Character ch : reverseMap.getOrDefault(occurrence, new LinkedHashSet<>())) {
+                for(int i = 0; i < occurrence; i++)
                     sb.append(ch);
             }
         }

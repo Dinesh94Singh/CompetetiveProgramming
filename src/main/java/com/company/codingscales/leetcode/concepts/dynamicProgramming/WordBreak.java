@@ -32,10 +32,26 @@ public class WordBreak {
     }
 
     public boolean wordBreak(final String s, final List<String> wordDict) {
-        final Set<String> words = new HashSet<String>(wordDict);
+        final Set<String> words = new HashSet<>(wordDict);
         cache = new int[s.length()];
         Arrays.fill(cache, -1);
         return recHelper(s, 0, words);
+    }
 
+    public boolean wordBreakDP(String s, List<String> wordDict) {
+        HashSet<String> words = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[s.length() + 1];
+
+        dp[0] = true;
+        for(int i = 0; i <= s.length(); i++) {
+            for(int j = 0; j < i; j++) {
+                if (dp[j] && words.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+
+        return dp[s.length()];
     }
 }

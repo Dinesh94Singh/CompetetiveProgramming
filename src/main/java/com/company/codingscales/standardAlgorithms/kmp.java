@@ -49,7 +49,7 @@ public class kmp {
                 i += 1; j += 1;
             if (j == pattern.length()) {
                 res.add(i - j);
-                j += 1;
+                j = lps[j - 1];
             }
             else if (i < s.length() && pattern.charAt(j) != s.charAt(i)) {
                 if (j == 0) {

@@ -1,6 +1,9 @@
 package com.company.codingscales.leetcode.concepts.greedy;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 /**
  * Similar to: https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/
@@ -24,37 +27,33 @@ import java.util.Stack;
  */
 public class SmallestSubsequenceOfDistinctCharacters {
     public String smallestSubsequence(String s) {
-        int[] lastIdxs = new int[26];
-        Stack<Character> st = new Stack<>();
-
+        HashMap<Character, Integer> occurences = new HashMap<>();
         for(int i = 0; i < s.length(); i++) {
-            int idx = s.charAt(i) - 'a';
-            lastIdxs[idx] = i;
+            occurences.put(s.charAt(i), i);
         }
 
-        int[] visited = new int[26];
+        Stack<Character> st = new Stack<>();
+        HashSet<Character> visited = new HashSet<>();
+
         for(int i = 0; i < s.length(); i++) {
             // check if the current char is smaller than previous character of stack
             // check if the previous char's last occurrence is somewhere in future. If not in future, you cannot delete it.
             // You cannot have same character appearing twice, so create a visited arr, and remove / add each time you push and pop the element to stack
+
             char ch = s.charAt(i);
 
-            if (visited[ch - 'a'] > 0)
+            if (visited.contains(ch))
                 continue;
-            while(!st.isEmpty() && Character.compare(st.peek(), ch) >= 0 && lastIdxs[st.peek() - 'a'] > i) {
+
+            while (!st.isEmpty() && st.peek() >= ch && occurences.get(st.peek()) > i) {
                 char x = st.pop();
-                visited[x - 'a'] = 0;
+                visited.remove(x);
             }
 
             st.push(ch);
-            visited[ch - 'a']++;
+            visited.add(ch);
         }
 
-        StringBuilder sb = new StringBuilder();
-        for(Character ch : st) {
-            sb.append(ch);
-        }
-
-        return sb.toString();
+        return st.stream().map(String::valueOf).collect(Collectors.joining(""));
     }
 }

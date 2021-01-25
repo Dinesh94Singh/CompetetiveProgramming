@@ -1,48 +1,43 @@
 package com.company.codingscales.leetcode.concepts.trees;
 
-import java.util.ArrayDeque;
-
 public class InorderSuccessorOfBST {
-    public TreeNode inorderSuccessor(final TreeNode root, final TreeNode p) {
-        // you need parent info
-        if (root == null) return null;
-        if (root.val == p.val) return null;
-
-        final ArrayDeque<TreeNode> deque = new ArrayDeque<>();
-        TreeNode curr = root;
-        deque.addLast(curr);
-        while (curr != null) {
-            if (curr.val < p.val) {
-                deque.addLast(curr);
-                curr = curr.right;
-            } else if (curr.val > p.val) {
-                deque.addLast(curr);
-                curr = curr.left;
-            } else {
-                if (curr.right != null) {
-                    TreeNode succ = curr.right;
-                    while (succ.left != null) {
-                        succ = succ.left;
-                    }
-                    return succ;
-                } else {
-                    while(!deque.isEmpty()) {
-                        final TreeNode top = deque.peekLast();
-                        if (top.left != null && top.left.val == p.val) {
-                            return top;
-                        }
-                        if (top.right == null || top.right.val == p.val || top.val < p.val)
-                            deque.removeLast();
-                        else
-                            break;
-                    }
-                    if (deque.isEmpty())
-                        return null;
-                    return deque.peekLast();
-                }
-            }
+    public TreeNode inorderSuccessor(TreeNode root, final TreeNode p) {
+        if (p.right != null) {
+            TreeNode succ = p.right;
+            while (succ.left != null)
+                succ = succ.left;
+            return succ;
         }
-        return null;
+
+        /**
+         * Using Stack
+         *         Stack<TreeNode> st = new Stack<>();
+         *
+         *         while (root != null) {
+         *             if (p.val < root.val) {
+         *                 st.push(root);
+         *                 root = root.left;
+         *             } else if (p.val > root.val) {
+         *                 root = root.right;
+         *             } else if (p.val == root.val) {
+         *                 if (st.isEmpty())
+         *                     return null;
+         *                 return st.peek();
+         *             }
+         *         }
+         */
+
+        TreeNode succ = null;
+        while (root != null) {
+            if (p.val < root.val) {
+                succ = root;
+                root = root.left;
+            } else if (p.val > root.val) { // if we are going left and if we go right, then the left one would not be the successor.
+                root = root.right;
+            } else break;
+        }
+
+        return succ;
     }
 
     public static void main(final String[] args) {

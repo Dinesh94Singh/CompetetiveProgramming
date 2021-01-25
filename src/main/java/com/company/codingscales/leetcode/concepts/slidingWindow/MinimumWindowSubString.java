@@ -2,7 +2,7 @@ package com.company.codingscales.leetcode.concepts.slidingWindow;
 
 import java.util.HashMap;
 
-public class minimumWindowSubString {
+public class MinimumWindowSubString {
     public static String minWindow(final String s, final String t) {
         final HashMap<Character, Integer> tCounter = new HashMap<>();
         final HashMap<Character, Integer> windowCounter = new HashMap<>();
@@ -32,7 +32,7 @@ public class minimumWindowSubString {
                 windowCounter.putIfAbsent(ch, 0);
                 windowCounter.put(ch, windowCounter.get(ch) + 1);
 
-                if (windowCounter.get(ch) == tCounter.get(ch)) {
+                if (windowCounter.get(ch).equals(tCounter.get(ch))) {
                     formed++;
                 }
             }
