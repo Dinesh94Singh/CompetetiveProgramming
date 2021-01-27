@@ -3,57 +3,102 @@ package com.company.codingscales.leetcode.concepts.arrays;
 import java.util.Stack;
 
 public class TrappingRainWater {
-    public static int trap(final int[] height) {
+    // for each idx pos, we are pre-cal the right and left boundaries and add res
+    public static int trap(int[] height) {
+        int[] left = new int[height.length];
+        int[] right = new int[height.length + 1];
+
+        int N = height.length;
+
+        left[0] = height[0];
+        right[N] = height[N - 1];
+        for (int i = 1; i < height.length; i++) {
+            left[i] = Math.max(left[i - 1], height[i]);
+            right[N - i - 1] = Math.max(right[N - i], height[N - i - 1]);
+        }
+
+        int ans = 0;
+        for (int i = 1; i < N; i++) {
+            ans += Math.min(left[i], right[i]) - height[i];
+        }
+
+        return ans;
+    }
+
+    // We find an Tall Building and remove elements and multiply the distance.
+    public static int trapStack(int[] height) {
+        int N = height.length;
+        if (N == 0)
+            return 0;
+
         Stack<Integer> st = new Stack<>();
         int i = 0;
-        int n = height.length;
-        int total = 0;
-        while (i < n) {
+        int ans = 0;
+        while (i < N) {
             int curr = height[i];
-            while (!st.isEmpty() && height[st.peek()] < curr) { // when ever u see, water can be trapped, use it.
-                int index = st.pop();
-                if (st.isEmpty())
-                    continue;
+            while (!st.isEmpty() && curr > height[st.peek()]) {
+                int h = height[st.pop()];
 
-                int prevIndex = st.peek();
-                int dist = i - prevIndex - 1;
-                int minHeight = Math.min(curr, height[prevIndex]);
-                total += (minHeight - height[index]) * dist;
+                if (st.isEmpty())
+                    break;
+                int dist = i - st.peek() - 1;
+                ans += (dist * (Math.min(curr, height[st.peek()]) - h));
             }
             st.push(i);
             i++;
         }
 
-        return total;
+        return ans;
     }
 
-    public static int trap2Pointers(final int[] height) {
-        int i = 0, j = height.length - 1;
-        int total = 0;
+    // Left and Right pointers, compare which is a wall.
+    // The Smaller one is the wall, which can fit the water.
+    // Compare the current val with Smaller wall -> If wall is larger than prev => update it
+    // Else, min water we can trap is leftMax - current
+    // Similarly, when the min is the rightWall -> Do the same
+    public static int trapTwoPointer(int[] A) {
+        int left = 0, right = A.length - 1;
         int leftMax = 0, rightMax = 0;
-
-        while (i < j) {
-            int left = height[i];
-            int right = height[j];
-
-            if (left < right) {
-                if (left >= leftMax) {
-                    leftMax = left;
+        int ans = 0;
+        while (left < right) {
+            if (A[left] < A[right]) {
+                if (A[left] >= leftMax) {
+                    leftMax = A[left];
                 } else {
-                    total += (leftMax - left);
+                    ans += (leftMax - A[left]);
                 }
-                i++;
+                left++;
             } else {
-                if (right >= rightMax) {
-                    rightMax = right;
+                if (A[right] >= rightMax) {
+                    rightMax = A[right];
                 } else {
-                    total += (rightMax - right);
+                    ans += (rightMax - A[right]);
                 }
-                j--;
+                right--;
             }
         }
+        return ans;
+    }
+    public static int trapCummulativeDP(int[] height) {
+        int[] left = new int[height.length];
+        int[] right = new int[height.length];
 
-        return total;
+        int N = height.length;
+        if (N == 0)
+            return 0;
+        left[0] = height[0];
+        right[N - 1] = height[N - 1];
+        for(int i = 1; i < height.length; i++) {
+            left[i] = Math.max(left[i - 1], height[i]);
+            right[N - i - 1] = Math.max(right[N - i], height[N - i - 1]);
+        }
+
+        int ans = 0;
+        for(int i = 1; i < N; i++) {
+            ans += Math.min(left[i], right[i]) - height[i];
+        }
+
+        return ans;
     }
 
     public static void main(String[] args) {
