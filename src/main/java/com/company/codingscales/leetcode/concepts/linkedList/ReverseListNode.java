@@ -1,12 +1,7 @@
 package com.company.codingscales.leetcode.concepts.linkedList;
 
 public class ReverseListNode {
-    static class ListNode {
-        ListNode next;
-        int val;
-    }
-
-    public ListNode reverseList(ListNode head) {
+    public static ListNode reverseList(ListNode head) {
         ListNode prev = null;
         ListNode curr = head;
 

@@ -2,7 +2,7 @@ package com.company.codingscales.leetcode.concepts.strings;
 
 import java.util.ArrayDeque;
 
-public class RemoveAllAdjCharacters {
+public class RemoveAllAdjDuplicateCharacters {
     public String removeDuplicates(final String S) {
         final ArrayDeque<Character> stack = new ArrayDeque<Character>();
 
@@ -26,7 +26,7 @@ public class RemoveAllAdjCharacters {
     }
 
     public static void main(final String[] args) {
-        final RemoveAllAdjCharacters r = new RemoveAllAdjCharacters();
+        final RemoveAllAdjDuplicateCharacters r = new RemoveAllAdjDuplicateCharacters();
         System.out.println(r.removeDuplicates("abbbaca"));
     }
 }

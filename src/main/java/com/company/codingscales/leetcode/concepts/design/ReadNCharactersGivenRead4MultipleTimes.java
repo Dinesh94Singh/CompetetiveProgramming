@@ -27,7 +27,7 @@ public class ReadNCharactersGivenRead4MultipleTimes {
             }
 
             for(int i = 0; i < cacheSize; i++) {
-                cache[writeIndex++] = cache[readIndex++];
+                buf[writeIndex++] = cache[readIndex++];
                 n--;
             }
         }

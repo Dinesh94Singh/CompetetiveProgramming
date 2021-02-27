@@ -1,25 +1,26 @@
 package com.company.codingscales.leetcode.concepts.arrays;
 
 public class MaximumProductSubarray {
-    int maxProduct(int[] arr) {
-        int max = arr[0];
-        int min = arr[0];
+    int maxProduct(int[] nums) {
+        int max = nums[0];
+        int min = nums[0];
 
-        int res = arr[0];
+        int ans = nums[0];
 
-        for(int i = 0; i < arr.length; i++) {
-            if (arr[i] < 0) {
-                int t = max;
-                max = Math.max(min * arr[i], arr[i]);
-                min = Math.min(t * arr[i], arr[i]);
+        for(int i = 1; i < nums.length; i++) {
+            int each = nums[i];
+            if (each >= 0) {
+                max = Math.max(each * max, each);
+                min = Math.min(each * min, each);
             } else {
-                max = Math.max(arr[i], max * arr[i]);
-                min = Math.min(arr[i], min * arr[i]);
+                int t = max;
+                max = Math.max(each * min, each);
+                min = Math.min(each * t, each);
             }
 
-            res = Math.max(res, max);
+            ans = Math.max(max, ans);
         }
 
-        return res;
+        return ans;
     }
 }

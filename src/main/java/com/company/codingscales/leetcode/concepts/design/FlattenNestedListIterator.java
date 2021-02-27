@@ -1,10 +1,15 @@
 package com.company.codingscales.leetcode.concepts.design;
 
 import java.util.ArrayDeque;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class NestedListIterator implements Iterator<Integer> {
+/**
+ * Flatten nested List iterator
+ * Nested list iterator
+ */
+public class FlattenNestedListIterator implements Iterator<Integer> {
     // This is the interface that allows for creating nested lists.
     // You should not implement it, or speculate about its implementation
     public interface NestedInteger {
@@ -23,7 +28,7 @@ public class NestedListIterator implements Iterator<Integer> {
 
     ArrayDeque<NestedInteger> nestedList;
 
-    public NestedListIterator(final List<NestedInteger> nestedList) {
+    public FlattenNestedListIterator(final List<NestedInteger> nestedList) {
         this.nestedList = new ArrayDeque<>(nestedList);
     }
 
@@ -41,6 +46,7 @@ public class NestedListIterator implements Iterator<Integer> {
     public boolean hasNext() {
         while (!nestedList.isEmpty() && !nestedList.peekFirst().isInteger()) {
             final List<NestedInteger> nl = nestedList.pollFirst().getList();
+            Collections.reverse(nl);
             for (final NestedInteger n : nl) {
                 nestedList.offerFirst(n);
             }

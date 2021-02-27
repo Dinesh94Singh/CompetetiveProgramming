@@ -1,7 +1,8 @@
 package com.company.codingscales.interviews.microsoft;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.math.BigInteger;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class FractionsThatSumTo1 {
     static class Node { // JavaFx pair
@@ -36,16 +37,47 @@ public class FractionsThatSumTo1 {
             return true;
         }
     }
+
     private static int solve(int[] x, int[] y) {
+        List<BigInteger> X = Arrays.stream(x).mapToObj(each -> BigInteger.valueOf((long) each)).collect(Collectors.toList());
+        List<BigInteger> Y = Arrays.stream(x).mapToObj(each -> BigInteger.valueOf((long) each)).collect(Collectors.toList());
+
+
+
+        /**
+         * 1 / 3 is the first pair
+         * Encountered 2/3 => (3 - 2)/3 => 1/3
+         *
+         * 2/6 is the first pair, with gcd, we store it as 1/3
+         * Encountered 4/6 => GCD of 4 & 6 => 2
+         * 6/2 => (3 - 2) / 3 => 1/3 (which is already stored in Map)
+         */
         int mod = (int) 1e9 + 7;
         int res = 0;
-        Map<Node, Integer> map = new HashMap<>();
+        Map<AbstractMap.SimpleImmutableEntry<BigInteger, BigInteger>, Integer> map = new HashMap<>();
         for (int i = 0; i < x.length; i++) {
-            int gcd = gcd(x[i], y[i]);
-            Node node = new Node(x[i]/gcd, y[i]/gcd);
-            if (map.containsKey(new Node(y[i]/gcd - x[i]/gcd, y[i]/gcd)))
-                res = (res + map.get(new Node(y[i]/gcd - x[i]/gcd, y[i]/gcd))) % mod;
-            map.put(node, map.getOrDefault(node, 0) + 1);
+            BigInteger A = BigInteger.valueOf((long) x[i]);
+            BigInteger B = BigInteger.valueOf((long) y[i]);
+            BigInteger GCD = A.gcd(B);
+
+            // When Javafx is not available, use this. The comparision happens as per values, instead of hashcode
+            AbstractMap.SimpleImmutableEntry<BigInteger, BigInteger> curr = new AbstractMap.SimpleImmutableEntry<BigInteger, BigInteger>(
+                    A.divide(GCD),
+                    B.divide(GCD)
+            );
+
+            BigInteger C = B.divide(GCD).subtract(A.divide(GCD));
+            BigInteger D = B.divide(GCD);
+            AbstractMap.SimpleImmutableEntry<BigInteger, BigInteger> other = new AbstractMap.SimpleImmutableEntry<>(
+                    C,
+                    D
+            );
+
+            if (map.containsKey(other)) {
+                res = (res + map.get(other) % mod) % mod;
+            }
+
+            map.put(curr, map.getOrDefault(curr, 0) + 1);
         }
         return res;
     }

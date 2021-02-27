@@ -11,8 +11,6 @@ public class LargestMAlignedSubset {
         int result = 0;
         if (array == null || array.length == 0) return 0;
 
-        final int length = array.length;
-
         // aggregate numbers by the reminder
         final int[] subsetSizeArray = new int[M];
         for (final int num : array) {

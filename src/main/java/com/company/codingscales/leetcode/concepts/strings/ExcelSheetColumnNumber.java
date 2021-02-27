@@ -1,3 +1,5 @@
+package com.company.codingscales.leetcode.concepts.strings;
+
 class ExcelSheetColumnNumber {
     public int titleToNumber(String s) {
         int result = 0;

@@ -1,4 +1,4 @@
-package com.company.codingscales.leetcode.concepts.hashmap;
+package com.company.codingscales.leetcode.concepts.design;
 
 import java.util.*;
 
