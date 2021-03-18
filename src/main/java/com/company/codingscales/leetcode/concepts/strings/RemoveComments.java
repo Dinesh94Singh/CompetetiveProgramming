@@ -23,6 +23,7 @@ public class RemoveComments {
     public static List<String> removeComments(final String[] source) {
         boolean inBlock = false;
         StringBuilder newline = new StringBuilder();
+        newline.replace(0, newline.length(), "");
         final List<String> ans = new ArrayList<>();
         for (final String line: source) {
             int i = 0;

@@ -15,7 +15,7 @@ public class MedianOfDataStream {
         maxHeap = new PriorityQueue<>(Collections.reverseOrder());
     }
 
-    public void addNum(final int num) {
+    public void addNum(final int num)  {
         size++;
         if (maxHeap.isEmpty() || maxHeap.peek() >= num)
             maxHeap.add(num);

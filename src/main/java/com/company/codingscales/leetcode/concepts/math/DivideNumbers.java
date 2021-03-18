@@ -36,7 +36,7 @@ public class DivideNumbers {
             return finalSign > 0 ? (int) count : (int) count * -1;
         }
 
-        private long dfs(long N, long D) { // refer to bit manupulation ans for iterative solution
+        private long dfs(long N, long D) { // refer to bit manipulation ans for iterative solution
             if (N < D)
                 return 0;
 

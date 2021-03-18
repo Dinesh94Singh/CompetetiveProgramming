@@ -14,6 +14,7 @@ public class LargestNumber {
             return s2.compareTo(s1);
         });
 
+
         if (list.get(0).equals("0"))
             return "0";
         StringBuilder sb = new StringBuilder();

@@ -29,8 +29,9 @@ public class HouseThief {
         Integer[] dp = new Integer[amounts.length + 1];
         dp[0] = 0;
         dp[1] = amounts[0];
-        for(int i = 1; i < amounts.length + 1; i++)
+        for(int i = 1; i < amounts.length + 1; i++) {
             dp[i] = Integer.MIN_VALUE;
+        }
 
         for(int i = 2; i < amounts.length; i++) {
             dp[i] = Math.max(dp[i - 2] + amounts[i], dp[i - 1]);

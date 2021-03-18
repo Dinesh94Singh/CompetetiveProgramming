@@ -43,7 +43,7 @@ public class RegularExpressionMatching {
                         (pattern.charAt(j) == text.charAt(i) ||
                                 pattern.charAt(j) == '.'));
                 if (j + 1 < pattern.length() && pattern.charAt(j+1) == '*'){
-                    dp[i][j] = dp[i][j+2] || first_match && dp[i+1][j];
+                    dp[i][j] = dp[i][j+2] || (first_match && dp[i+1][j]);
                 } else {
                     dp[i][j] = first_match && dp[i+1][j+1];
                 }

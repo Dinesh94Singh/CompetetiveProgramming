@@ -1,5 +1,7 @@
 package com.company.codingscales.leetcode.concepts.linkedList;
 
+import java.util.*;
+
 public class CopyListWithRandomPointer {
     static class Node {
         int val;
@@ -10,41 +12,69 @@ public class CopyListWithRandomPointer {
             this.val = val;
         }
     }
-    public Node copyRandomList(final Node head) {
+
+    public Node copyRandomListWithHashMap(final Node head) {
         if (head == null)
             return null;
-        Node p1 = head;
+        HashMap<Node, Node> map = new HashMap<>();
+        Node curr = head;
+        while (curr != null) {
+            map.putIfAbsent(curr, new Node(curr.val));
+            Node clone = map.get(curr);
 
-        while (p1 != null) {
-            Node t = new Node(p1.val);
-            Node dummy = p1.next;
-
-            p1.next = t;
-            t.next = dummy;
-
-            p1 = dummy;
+            if (curr.next != null) {
+                map.putIfAbsent(curr.next, new Node(curr.next.val));
+                clone.next = map.get(curr.next);
+            }
+            if (curr.random != null) {
+                map.putIfAbsent(curr.random, new Node(curr.random.val));
+                clone.random = map.get(curr.random);
+            }
+            curr = curr.next;
         }
 
+        return map.get(head);
+    }
 
-        p1 = head;
-        while (p1 != null) {
-            p1.next.random = p1.random != null ? p1.random.next : null;
-            p1 = p1.next.next;
+    public Node copyRandomList(final Node head) {
+
+
+        if (head == null)
+            return null;
+        Node curr = head;
+        while (curr != null) {
+            Node clone = new Node(curr.val);
+            Node next = curr.next;
+
+            curr.next = clone;
+            clone.next = next;
+            curr = next;
         }
 
-        p1 = head;
-        Node p2 = head.next;
-
-        Node ret = p1.next;
-
-        while (p1 != null) {
-            p1.next = p1.next.next;
-            p2.next = p2.next != null ? p2.next.next : null;
-
-            p2 = p2.next;
-            p1 = p1.next;
+        curr = head;
+        while (curr != null) {
+            Node random = curr.random;
+            if (random != null)
+                curr.next.random = random.next;
+            curr = curr.next.next;
         }
 
-        return ret;
+        // remove the interleaving
+        Node newHead = head.next;
+        curr = head;
+
+        while (curr != null) {
+
+            Node clone = curr.next;
+            Node next = clone.next;
+
+            curr.next = next;
+            if (next != null)
+                clone.next = next.next;
+
+            curr = curr.next;
+        }
+
+        return newHead;
     }
 }

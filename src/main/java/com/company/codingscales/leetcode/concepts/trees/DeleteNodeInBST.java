@@ -64,6 +64,37 @@ public class DeleteNodeInBST {
         return root;
     }
 
+
+    public TreeNode delete(TreeNode root, int key) {
+        if (root == null)
+            return null;
+
+        if (root.val < key) {
+            root.right = deleteNode(root.right, key);
+        } else if (root.val > key) {
+            root.left = deleteNode(root.left, key);
+        } else {
+            if (root.left == null && root.right == null) {
+                return null;
+            } else if (root.right != null) {
+                TreeNode succ = root.right;
+                while (succ.left != null)
+                    succ = succ.left;
+
+                root.val = succ.val;
+                root.right = deleteNode(root.right, root.val);
+            } else {
+                TreeNode pred = root.left;
+                while (pred.right != null)
+                    pred = pred.right;
+                root.val = pred.val;
+                root.left = deleteNode(root.left, root.val);
+            }
+        }
+
+        return root;
+    }
+
     public static void main(final String[] args) {
         final TreeNode root = new TreeNode(4);
         root.left = new TreeNode(2);

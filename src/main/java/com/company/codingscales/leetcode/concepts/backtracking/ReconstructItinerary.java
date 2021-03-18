@@ -57,6 +57,58 @@ public class ReconstructItinerary {
         return res;
     }
 
+
+    /**
+     * O(ELogV) =>
+     *
+     */
+
+    HashMap<String, LinkedList<String>> flightMap = new HashMap<>(); // graph
+    LinkedList<String> result = null;
+
+    // The basic idea of Hierholzer's algorithm is the stepwise construction of the Eulerian cycle by connecting disjunctive circles.
+    // visited each node once and only once is called Hamiltonian.
+    // Step 1). Starting from any vertex, we keep following the unused edges until we get stuck at certain vertex where we have no more unvisited outgoing edges.
+    // Step 2). We then backtrack to the nearest neighbor vertex in the current path that has unused edges and we repeat the process until all the edges have been used.
+    // first vertex that we got stuck at would be the end point of our Eulerian path. So if we follow all the stuck points backwards, we could reconstruct the Eulerian path at the end.
+    public List<String> findItineraryEulersPath(List<List<String>> tickets) {
+        // Step 1). build the graph first
+        for(List<String> ticket : tickets) { // populate graph
+            String origin = ticket.get(0);
+            String dest = ticket.get(1);
+            if (this.flightMap.containsKey(origin)) {
+                LinkedList<String> destList = this.flightMap.get(origin);
+                destList.add(dest);
+            } else {
+                LinkedList<String> destList = new LinkedList<String>();
+                destList.add(dest);
+                this.flightMap.put(origin, destList);
+            }
+        }
+
+        // Step 2). order the destinations
+        this.flightMap.forEach((key, value) -> Collections.sort(value));
+
+        this.result = new LinkedList<String>();
+        // Step 3). post-order DFS
+        this.DFS("JFK");
+        return this.result;
+    }
+
+    protected void DFS(String origin) {
+        // Visit all the outgoing edges first.
+        if (this.flightMap.containsKey(origin)) {
+            LinkedList<String> destList = this.flightMap.get(origin);
+            while (!destList.isEmpty()) {
+                // while we visit the edge, we trim it off from graph.
+                String dest = destList.pollFirst();
+                DFS(dest);
+            }
+        }
+        // add the airport to the head of the itinerary
+        this.result.offerFirst(origin);
+    }
+
     public static void main(String[] args) {
         final ReconstructItinerary itinerary = new ReconstructItinerary();
         final List<List<String>> path = new ArrayList<>();

@@ -20,7 +20,7 @@ public class Permutations2 {
         for(int k = i; k < nums.size(); k++) {
             if (appeared.add(nums.get(k))) {
                 Collections.swap(nums, i, k);
-                dfs(k + 1, nums, list);
+                dfs(i + 1, nums, list);
                 Collections.swap(nums, i, k);
             }
         }

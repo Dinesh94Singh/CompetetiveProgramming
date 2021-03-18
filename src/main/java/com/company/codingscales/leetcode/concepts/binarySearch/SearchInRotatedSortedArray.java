@@ -1,66 +1,57 @@
 package com.company.codingscales.leetcode.concepts.binarySearch;
 
-import java.util.Arrays;
-
 public class SearchInRotatedSortedArray {
-    private int findRotIndex(int[] nums) {
-        int left = 0, right = nums.length - 1;
+    public int search(int[] A, int target) {
+        int rotatedIndex = 0;
+        int N = A.length;
+        if (N == 1)
+            return A[0] == target ? 0 : -1;
 
-        while (left <= right) {
-            int mid = (left + (right - left) / 2);
-            if (nums[mid] > nums[mid + 1])
-                return mid + 1;
-
-            if (nums[mid] > nums[nums.length - 1]) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+        if (A[0] > A[N - 1]) {
+            rotatedIndex = findRotatedIdx(A);
+        } else {
+            return binarySearch(A, 0, N, target);
         }
 
-        return left + 1;
+        if (target == A[rotatedIndex]) {
+            return rotatedIndex;
+        } else if (target > A[N - 1]) {
+            return binarySearch(A, 0, rotatedIndex, target);
+        } else {
+            return binarySearch(A, rotatedIndex, N, target);
+        }
     }
 
-    static int findRotatingIndex(int[] nums) {
-        int lo = 0, hi = nums.length - 1;
+    private int findRotatedIdx(int[] A) {
+        int lo = 0;
+        int hi = A.length - 1;
+        int N = A.length - 1;
+
         while (lo <= hi) {
-            int mid = (lo + (hi - lo) / 2);
-            if (nums[mid] < nums[0]) {
-                hi = mid - 1;
-            } else {
+            int mid = lo + (hi - lo) / 2;
+
+            //                           v
+            if (A[0] <= A[mid]) { // 4 5 6 1 2 4
                 lo = mid + 1;
+            } else {
+                hi = mid - 1;
             }
         }
 
         return lo;
     }
 
-    public int search(int[] nums, int target) {
-        int N = nums.length - 1;
-        int rotIndex = 0;
-        if (nums[0] > nums[N]) {
-            rotIndex = findRotIndex(nums);
+    private int binarySearch(int[] A, int start, int end, int target) {
+        while (start <= end && start < A.length) {
+            int mid = (start + (end - start) / 2);
+            if (A[mid] == target)
+                return mid;
+            else if (A[mid] > target)
+                end = mid - 1;
+            else
+                start = mid + 1;
         }
 
-        if (rotIndex == 0) {
-            int val = Arrays.binarySearch(nums, 0, nums.length, target);
-            if (val < 0)
-                return -1;
-            return val;
-        }
-
-        if (nums[rotIndex] == target) {
-            return rotIndex;
-        } else if (nums[nums.length - 1] < target) {
-            int val = Arrays.binarySearch(nums, 0, rotIndex, target);
-            if (val < 0)
-                return -1;
-            return val;
-        } else {
-            int val = Arrays.binarySearch(nums, rotIndex, nums.length, target);
-            if (val < 0)
-                return -1;
-            return val;
-        }
+        return -1;
     }
 }

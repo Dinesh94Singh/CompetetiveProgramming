@@ -79,6 +79,7 @@ public class TrappingRainWater {
         }
         return ans;
     }
+
     public static int trapCummulativeDP(int[] height) {
         int[] left = new int[height.length];
         int[] right = new int[height.length];

@@ -6,7 +6,7 @@ package com.company.codingscales.leetcode.concepts.dynamicProgramming.longestStr
 public class LongestRepeatingSubsequence {
     static Integer[][] dp;
 
-    static int dfs(int i, int j, String s) {
+    static int dfs(final int i, final int j, final String s) {
         if (i == s.length() || j == s.length())
             return 0;
 

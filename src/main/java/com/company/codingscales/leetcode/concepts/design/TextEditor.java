@@ -64,6 +64,12 @@ public class TextEditor {
         history.offerLast(t);
     }
 
+    void backSpace2() {
+        Text curr = new Text();
+        curr.operation = "BACKSPACE";
+        history.offerLast(curr);
+    }
+
     void backSpace(String timeStamp) {
         if (history.isEmpty())
             return;
