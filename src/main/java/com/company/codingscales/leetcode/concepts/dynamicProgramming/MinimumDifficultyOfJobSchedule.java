@@ -20,9 +20,9 @@ public class MinimumDifficultyOfJobSchedule {
         if (index == N)
             return 0;
 
-        if (d == 1) {
+        if (d == 1) { // last day
             int maximum = Integer.MIN_VALUE;
-            for (int k = index; k < N; k++) {
+            for (int k = index; k < N; k++) { // what ever left in A's maxDifficulty, is the day's difficulty
                 maximum = Math.max(maximum, A[k]);
             }
 
@@ -31,7 +31,7 @@ public class MinimumDifficultyOfJobSchedule {
 
         int maximum = Integer.MIN_VALUE;
         int res = Integer.MAX_VALUE;
-        for(int k = index; k < N - d + 1; k++) {
+        for(int k = index; k < N - d + 1; k++) { // stop at idx k and get maxDifficulty for the day and hope next days difficult is easier. You must and should do, 1 work at-least per day.
             maximum = Math.max(maximum, A[k]);
             res = Math.min(res, maximum + dfs(k + 1, d - 1, A)); // cut at this index and add the sum of maximum
         }

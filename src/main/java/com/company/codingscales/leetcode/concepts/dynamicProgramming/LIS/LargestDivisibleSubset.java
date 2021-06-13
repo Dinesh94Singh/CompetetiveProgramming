@@ -1,9 +1,6 @@
 package com.company.codingscales.leetcode.concepts.dynamicProgramming.LIS;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Similar to {@link LongestIncreasingSubsequence}
@@ -27,7 +24,7 @@ public class LargestDivisibleSubset {
         }
 
         List<Integer> res = new ArrayList<>();
-        int maxIndex = 0;
+        int maxIndex = 0; // get the maximum index
         for(int i = 1; i < N; i++) {
             if (dp[maxIndex] < dp[i]) {
                 maxIndex = i;
@@ -35,7 +32,8 @@ public class LargestDivisibleSubset {
         }
 
         int temp = nums[maxIndex];
-        int lis = dp[maxIndex];
+
+        int lis = dp[maxIndex]; // can store in external res variable
         for(int i = maxIndex; i >= 0; i--) {
             if (temp % nums[i] == 0 && lis == dp[i]) {
                 res.add(nums[i]);

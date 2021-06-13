@@ -4,59 +4,55 @@ import java.util.HashMap;
 
 public class MinimumWindowSubString {
     public static String minWindow(final String s, final String t) {
-        final HashMap<Character, Integer> tCounter = new HashMap<>();
-        final HashMap<Character, Integer> windowCounter = new HashMap<>();
-        final int tLength = t.length();
-        final int sLength = s.length();
-
-        for(final char c: t.toCharArray()) {
-            tCounter.putIfAbsent(c, 0);
-            tCounter.put(c, tCounter.get(c) + 1);
+        HashMap<Character, Integer> tMap = new HashMap<>();
+        HashMap<Character, Integer> sMap = new HashMap<>();
+        for(char ch : t.toCharArray()) {
+            tMap.put(ch, tMap.getOrDefault(ch, 0) + 1);
         }
 
-
-        final int remaining = tCounter.size();
+        int required = tMap.size();
         int formed = 0;
-        int start = 0;
-        int end = 0;
-        int minLength = Integer.MAX_VALUE;
-        int subStringStart = 0;
-        int subStringEnd = 0;
+        int N = s.length();
+        int start = 0, end = 0;
 
-        char ch;
+        int minlen = Integer.MAX_VALUE;
+        int subStart = 0, subEnd = 0;
 
-        while(end < sLength) {
-            ch = s.charAt(end);
+        while (end < N) {
+            char ch = s.charAt(end);
 
-            if (tCounter.containsKey(ch)) {
-                windowCounter.putIfAbsent(ch, 0);
-                windowCounter.put(ch, windowCounter.get(ch) + 1);
+            if (tMap.containsKey(ch)) {
+                sMap.put(ch, sMap.getOrDefault(ch, 0) + 1);
 
-                if (windowCounter.get(ch).equals(tCounter.get(ch))) {
+                if (sMap.get(ch).intValue() == tMap.get(ch).intValue()) {
                     formed++;
                 }
+
+                System.out.println("Formed : " + formed + " Required : " + required + " at start Idx " + start + " at end idx " + end);
+
+                while (formed == required && start <= end) {
+                    if (minlen > end - start + 1) {
+                        minlen = end - start + 1;
+                        subStart = start;
+                        subEnd = end;
+                    }
+
+                    ch = s.charAt(start);
+                    if (tMap.containsKey(ch)) {
+                        sMap.put(ch, sMap.get(ch) - 1);
+                        if (sMap.get(ch).intValue() < tMap.get(ch).intValue()) {
+                            formed--;
+                        }
+                    }
+
+                    start++;
+                }
             }
 
-            while (start < end && formed == remaining) {
-                if (end - start + 1 < minLength) {
-                    minLength = end - start + 1;
-                    subStringStart = start;
-                    subStringEnd = end;
-                }
-                if (tCounter.containsKey(s.charAt(start))) {
-                    windowCounter.put(s.charAt(start), windowCounter.get(s.charAt(start)) - 1);
-                    if (windowCounter.get(s.charAt(start)) < tCounter.get(s.charAt(start)))
-                        formed--;
-                }
-
-                start += 1;
-
-            }
-
-            end += 1;
+            end++;
         }
 
-        return minLength == Integer.MAX_VALUE ? "": s.substring(subStringStart, subStringEnd + 1);
+        return minlen != Integer.MAX_VALUE ? s.substring(subStart, subEnd + 1) : "";
     }
 
     public static void main(final String[] args) {

@@ -1,6 +1,6 @@
 package com.company.codingscales.leetcode.concepts.linkedList;
 
-public class RemoveNodesInKGroup {
+public class ReverseNodesInKGroup {
     public ListNode reverseKGroup(ListNode head, int K) {
         ListNode p1 = head;
         int k = K;

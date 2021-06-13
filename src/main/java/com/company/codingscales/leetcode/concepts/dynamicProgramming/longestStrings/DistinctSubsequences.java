@@ -1,31 +1,61 @@
 package com.company.codingscales.leetcode.concepts.dynamicProgramming.longestStrings;
 
+import java.util.Arrays;
+
 /**
  * Amazon interview question - 2019 interview for Ads team
  */
 public class DistinctSubsequences {
-    /**
-         dfs(String a, String b, int i, int j) {
-             if (j == b.length() && i == a.length())
-                 return 1;
-             if (i == a.length() || j == b.length())
-                 return 0;
 
-             int res = dfs(a, b, i + 1, j); // skip
-             if (a.charAt(i) == b.charAt(j))
-                 res += dfs(a,b,i+1,j+1); // consider
+    public int numDistinctMemo(String s, String t) {
+        // easy dynamic programming problem we have seen a million times using DFS
+        int[][] memo = new int[s.length()][t.length()]; // This will track how many ways the word can be completed from this point
 
-             return res;
-         }
-     */
+        for (int[] arr : memo)
+            Arrays.fill(arr, -1);
+
+        // easy checks to save processing
+        if (t.length() > s.length())
+            return 0;
+
+        if (t.length() == s.length() && t.equals(s))
+            return 1;
+        else if (t.length() == s.length())
+            return 0;
+
+        return dfs(s, t, 0, 0, memo);
+    }
+
+    public int dfs(String s, String t, int i, int j, int[][] memo) {
+
+        // found a match
+        if (j == t.length())
+            return 1;
+        else if (s.length() == i) // hit the end without a match
+            return 0;
+
+        // already calculated this position
+        if (memo[i][j] != -1)
+            return memo[i][j];
+
+        int cases = 0;
+
+        // advance both characters if they match OR only the bigger strings
+        if (s.charAt(i) == t.charAt(j))
+            cases = dfs(s, t, i + 1, j + 1, memo) + dfs(s, t, i + 1, j, memo);
+        else
+            cases = dfs(s, t, i + 1, j, memo);
+
+        memo[i][j] = cases;
+        return cases;
+    }
+
     public int numDistinct(String a, String b) {
         // count the number of ways
         int n1 = a.length();
         int n2 = b.length();
 
         int[][] dp = new int[n1 + 1][n2 + 1];
-
-        int cnt = 0;
 
         for(int i = 0; i < a.length(); i++) { // when you reach end, there should be valid
             dp[i][0] = 1;

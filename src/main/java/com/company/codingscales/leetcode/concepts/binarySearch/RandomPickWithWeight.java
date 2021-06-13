@@ -1,5 +1,8 @@
 package com.company.codingscales.leetcode.concepts.binarySearch;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // TODO: This is a very important problem in 2020 = Like LRU (ML concept) - Do all variants of this problem
 public class RandomPickWithWeight {
     private int[] prefixSums;
@@ -10,6 +13,7 @@ public class RandomPickWithWeight {
     RandomPickWithWeight(int[] w) {
         this.prefixSums = new int[w.length];
 
+        List<Integer> a = new ArrayList<>();
         int prefixSum = 0;
         for (int i = 0; i < w.length; ++i) {
             prefixSum += w[i];

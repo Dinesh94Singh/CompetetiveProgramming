@@ -1,8 +1,12 @@
 package com.company.codingscales.leetcode.concepts.greedy;
 
-import javafx.util.Pair;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
 
-import java.util.*;
+import javafx.util.Pair;
 
 public class TaskScheduler {
     static public int leastInterval(final char[] tasks, final int n) {
@@ -43,6 +47,42 @@ public class TaskScheduler {
         }
 
         return steps;
+    }
+
+    public int leastIntervalMyVariant(char[] tasks, int n) {
+        if (n == 0)
+            return tasks.length;
+        HashMap<Character, Integer> counter = new HashMap<>();
+        for(char t : tasks)
+            counter.put(t, counter.getOrDefault(t, 0) + 1);
+
+        PriorityQueue<Pair<Character, Integer>> pq = new PriorityQueue<>((a, b) -> b.getValue() - a.getValue());
+
+        for(Map.Entry<Character, Integer> entry : counter.entrySet()) {
+            pq.offer(new Pair<>(entry.getKey(), entry.getValue()));
+        }
+
+        int res = 0, k = 0;
+
+        while (!pq.isEmpty()) {
+            k = n + 1;
+            List<Pair<Character, Integer>> intermediary = new ArrayList<>();
+            while (k > 0 && !pq.isEmpty()) {
+                Pair<Character, Integer> p = pq.poll();
+                res++;
+                k--;
+                if (p.getValue() > 1) {
+                    intermediary.add(new Pair<>(p.getKey(), p.getValue() - 1));
+                }
+            }
+
+            res += k; // if k == 0, then full-filled all
+            pq.addAll(intermediary);
+        }
+
+        res -= k; // for the last run, remove the additional steps added
+
+        return res;
     }
 
     public static void main(String[] args) {

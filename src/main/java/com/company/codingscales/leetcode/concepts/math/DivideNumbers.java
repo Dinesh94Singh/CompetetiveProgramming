@@ -48,7 +48,13 @@ public class DivideNumbers {
                 multiple += multiple;
             }
 
+            System.out.println("Multiple => " + multiple + " dfs(" + (N - t) + ", " + D + ")");
             return multiple + dfs(N - t, D);
+        }
+
+        public static void main(String[] args) {
+            BinaryIncrementsSolution binaryIncrementsSolution = new BinaryIncrementsSolution();
+            binaryIncrementsSolution.divide(40, 3);
         }
     }
 

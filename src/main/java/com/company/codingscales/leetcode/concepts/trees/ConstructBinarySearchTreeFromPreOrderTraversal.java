@@ -1,34 +1,32 @@
 package com.company.codingscales.leetcode.concepts.trees;
 
-import com.company.codingscales.templates.LeetCodeInputHelpers;
-
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ConstructBinarySearchTreeFromPreOrderTraversal {
-    private TreeNode recHelper(ArrayList<Integer> preorder, int left, int right) {
-        if (preorder.isEmpty()) return null;
-        if (preorder.get(0) > right || preorder.get(0) < left) return null;
+    static int idx = 0;
+    HashMap<Integer, Integer> map = new HashMap<>();
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        idx = 0;
+        for(int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
 
-        TreeNode root = new TreeNode(preorder.remove(0));
-        root.left = recHelper(preorder, left, root.val);
-        root.right = recHelper(preorder, root.val, right);
-
-        return root;
-
+        return dfs(preorder, inorder, 0, inorder.length - 1);
     }
 
-    public TreeNode bstFromPreorder(int[] preorder) {
-        ArrayList<Integer> al = new ArrayList<>();
+    private TreeNode dfs(int[] preorder, int[] inorder, int lo, int hi) {
+        if (idx == preorder.length)
+            return null;
+        if (lo > hi)
+            return null;
 
-        for(int i = 0; i < preorder.length; i++)
-            al.add(preorder[i]);
+        int t = preorder[idx];
+        idx++;
+        int inIdx = map.get(t);
+        TreeNode curr = new TreeNode(t);
+        curr.left = dfs(preorder, inorder, lo, inIdx - 1);
+        curr.right = dfs(preorder, inorder, inIdx + 1, hi);
 
-        return recHelper(al, Integer.MIN_VALUE, Integer.MAX_VALUE);
-    }
-
-    public static void main(String[] args) {
-        ConstructBinarySearchTreeFromPreOrderTraversal sol = new ConstructBinarySearchTreeFromPreOrderTraversal();
-        TreeNode root = sol.bstFromPreorder(LeetCodeInputHelpers.stringToIntArray("[8,5,1,7,10,12]"));
-        System.out.println(root);
+        return curr;
     }
 }

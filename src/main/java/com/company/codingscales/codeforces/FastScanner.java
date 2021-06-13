@@ -34,7 +34,7 @@ public class FastScanner {
 
     int[] nextArray() {
         int n = nextInt(); // read the input size
-        int a[] = new int[n];
+        int[] a = new int[n];
         Arrays.copyOfRange(a, 2, n);
 
         for(int i = 0; i < n; i++)

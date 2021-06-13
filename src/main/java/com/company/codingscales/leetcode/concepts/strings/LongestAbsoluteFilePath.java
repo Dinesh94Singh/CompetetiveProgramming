@@ -21,6 +21,9 @@ public class LongestAbsoluteFilePath {
     }
 
     public static void main(String[] args) {
+        String s = "\t\t\t\tfile.txt";
+        System.out.println(s.length());
+        System.out.println(s.trim().length());
         System.out.println(lengthLongestPath("dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext"));
     }
 }

@@ -21,32 +21,38 @@ import java.util.List;
 // Output: ["int main()","{ ","  ","int a, b, c;","a = b + c;","}"]
 public class RemoveComments {
     public static List<String> removeComments(final String[] source) {
+        List<String> res = new ArrayList<>();
         boolean inBlock = false;
-        StringBuilder newline = new StringBuilder();
-        newline.replace(0, newline.length(), "");
-        final List<String> ans = new ArrayList<>();
-        for (final String line: source) {
+        StringBuilder sb = new StringBuilder();
+        for(String line : source) {
             int i = 0;
-            final char[] chars = line.toCharArray();
-            if (!inBlock) newline = new StringBuilder();
-            while (i < line.length()) {
-                if (!inBlock && i+1 < line.length() && chars[i] == '/' && chars[i+1] == '*') {
-                    inBlock = true;
-                    i++;
-                } else if (inBlock && i+1 < line.length() && chars[i] == '*' && chars[i+1] == '/') {
-                    inBlock = false;
-                    i++;
-                } else if (!inBlock && i+1 < line.length() && chars[i] == '/' && chars[i+1] == '/') {
+            if (!inBlock) {
+                sb.replace(0, sb.length(), "");
+            }
+
+            while(i < line.length()) {
+                String t = i < line.length() - 1 ? line.substring(i, i + 2) : "";
+                if (!inBlock && t.equals("//")) {
                     break;
+                } else if (t.equals("/*") && !inBlock) {
+                    inBlock = true;
+                    i += 2;
+                } else if (t.equals("*/") && inBlock) {
+                    inBlock = false;
+                    i += 2;
                 } else if (!inBlock) {
-                    newline.append(chars[i]);
+                    sb.append(line.charAt(i));
+                    i += 1;
+                } else {
+                    i += 1; // continue exploring
                 }
-                i++;
             }
-            if (!inBlock && newline.length() > 0) {
-                ans.add(new String(newline));
-            }
+
+            if (inBlock || sb.length() == 0)
+                continue;
+            res.add(sb.toString());
         }
-        return ans;
+
+        return res;
     }
 }

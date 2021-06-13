@@ -15,7 +15,7 @@ public class findMedianOfTwoSortedArrays {
 
         /**
          * Always get the max of leftHalfs and min of rightHalfs
-         * 
+         *
          */
         while (lo <= hi) {
             int partX = (lo + (hi - lo) / 2);

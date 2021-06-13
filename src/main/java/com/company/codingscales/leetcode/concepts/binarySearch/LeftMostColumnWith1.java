@@ -14,7 +14,7 @@ public class LeftMostColumnWith1 {
         int C = l.get(1);
 
         int smallestIdx = Integer.MAX_VALUE;
-        for(int row = 0; row < R; row++) {
+        for(int row = 0; row < R; row++) { // for each row, we get the lowest column and maintain a global result
             int lo = 0, hi = C - 1;
             while (lo < hi) {
                 int mid = (lo + (hi - lo) / 2);
@@ -35,6 +35,7 @@ public class LeftMostColumnWith1 {
         return smallestIdx == Integer.MAX_VALUE ? -1 : smallestIdx;
     }
 
+    // for this what guarantees that columns are sorted as well ?
     public int leftMostColumnWithOneWithoutRowBinarySearch(BinaryMatrix binaryMatrix) {
         List<Integer> l = binaryMatrix.dimensions();
         int R = l.get(0);

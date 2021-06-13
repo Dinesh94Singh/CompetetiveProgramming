@@ -3,7 +3,6 @@ package com.company.codingscales.interviews.amazon;
 import java.util.HashMap;
 
 public class MusicPairs {
-    // TODO: Read before interview: Always ask the interviewer, about the q about remainder being 0;
     private static int solve(int[] nums) {
         HashMap<Integer, Integer> map = new HashMap<>();
         int res = 0;

@@ -7,30 +7,31 @@ public class ExclusiveTimeOfFunctions {
     // Input is always valid, means, process will end for sure
     // When ever the process is ending, it would be the process which is under progress.
     public static int[] exclusiveTime(int n, List<String> logs) {
-        final Stack<Integer> st = new Stack<>();
+        int[] res = new int[n];
 
-        final int[] res = new int[n];
+
+        Stack<Integer> st = new Stack<>(); // processId stack
         int prevTime = 0;
-        for(final String e : logs) {
-            final String[] A = e.split(":");
-            final int processId = Integer.parseInt(A[0]);
-            final String type = A[1];
-            final int curTime = Integer.parseInt(A[2]);
 
-            // System.out.println("prev time " + " curr Time " + prevTime + " : " + curTime);
+        for(String e : logs) {
+            String[] A = e.split(":");
 
-            if (type.equals("start")) { // prev process, which even in execution halts
+            int processId = Integer.parseInt(A[0]);
+            String type = A[1];
+            int time = Integer.parseInt(A[2]);
+
+            if (type.equals("start")) {
                 if (!st.isEmpty()) {
-                    final int prevProcess = st.peek();
-                    res[prevProcess] += curTime - prevTime - 1;
+                    int prevId = st.peek(); // y peek?
+                    res[prevId] += (time - prevTime - 1 + 1); // exclusive here
+                    // at time t - new process already started, which means, prevProcess ended at time t - 1
                 }
-                st.push(processId); // new Process will take action now
-                prevTime = curTime;
+                prevTime = time;
+                st.push(processId);
             } else {
-                // what ever is in progress, ended ? yes
-                final int prevProcess = st.pop();
-                res[prevProcess] += curTime - prevTime + 1;
-                prevTime = curTime;
+                int prevId = st.pop(); // prevId == processId
+                res[prevId] += (time - prevTime + 1); // here inclusive
+                prevTime = time + 1; // we already consumed time -> so instead, we + 1 for next
             }
         }
 

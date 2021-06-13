@@ -33,12 +33,15 @@ public class MinimumAsciiDeleteSumToTwoStrings {
 
         for(int i = 1; i <= M; i++) {
             for(int j = 1; j <= N; j++) {
-                int cost = 0;
-                if (A.charAt(i - 1) != B.charAt(j - 1))
-                    cost += A.charAt(i - 1) + B.charAt(j - 1);
 
-                dp[i][j] = Math.min(dp[i - 1][j] + A.charAt(i - 1), dp[i][j - 1] + B.charAt(j - 1));
-                dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - 1] + cost);
+                if (A.charAt(i - 1) != B.charAt(j - 1)) {
+                    int costToDeleteFromA = dp[i-1][j] + A.charAt(i - 1);
+                    int costToDeleteFromB = dp[i][j-1] + B.charAt(j - 1);
+
+                    dp[i][j] = Math.min(costToDeleteFromA, costToDeleteFromB);
+                } else {
+                    dp[i][j] = dp[i-1][j-1]; // no delete cost
+                }
             }
         }
 

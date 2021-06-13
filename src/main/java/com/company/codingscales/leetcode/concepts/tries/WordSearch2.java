@@ -53,7 +53,7 @@ public class WordSearch2 {
 
         if (curr.word != null) {
             res.add(curr.word);
-            curr.word = null; // so that, u dont add it back
+            curr.word = null; // so that, u don't add it back
         }
 
 

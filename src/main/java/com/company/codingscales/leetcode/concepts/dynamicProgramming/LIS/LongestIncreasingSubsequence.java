@@ -22,7 +22,7 @@ public class LongestIncreasingSubsequence {
     }
 
     static int LISBottomUp(int[] nums) {
-        final int dp[] = new int[nums.length + 1];
+        final int dp[] = new int[nums.length];
         Arrays.fill(dp, 1);
         int maxLength = Integer.MIN_VALUE;
 

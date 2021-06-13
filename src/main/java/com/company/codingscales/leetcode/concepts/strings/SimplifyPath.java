@@ -1,38 +1,66 @@
 package com.company.codingscales.leetcode.concepts.strings;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
+import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class SimplifyPath {
     private String simplifyPath(final String path) {
-        final String[] strings = path.split("\\/", -1);
-        final ArrayDeque<String> stack = new ArrayDeque<>();
+        path.replace("//", "/");
+        String[] elements = path.split("\\/", -1);
 
-        for(int i = 1; i < strings.length; i++) {
-            final String s = strings[i];
-            if (s.equals("") || s.equals(".")) {
-            } else if (s.equals("..") && !stack.isEmpty()) {
-                stack.removeLast();
-            } else if (!s.equals("..")) {
-                stack.addLast(s);
+        Stack<String> st = new Stack<>();
+
+        for(String each: elements) {
+            if (each.equals("") || each.equals(".")) {
+                continue;
+            } else if (each.equals("..")) {
+                if (!st.isEmpty()) {
+                    st.pop();
+                }
+            } else {
+                st.push(each);
             }
         }
 
-        if(stack.isEmpty()) {
+        if (st.isEmpty())
             return "/";
-        }
 
-        final StringBuilder s = new StringBuilder();
-        s.append("/");
-        final int n = stack.size();
-        for (int i = 0; i < n; i++) {
-            s.append(stack.removeFirst());
-            if (i != n - 1) {
-                s.append("/");
+        return "/" + st.stream().collect(Collectors.joining("/"));
+    }
+
+    static class SolutionRedo {
+        public String simplifyPath(String path) {
+            String[] elements = path.split("\\/");
+
+            Stack<String> st = new Stack<>();
+
+            for(String each : elements) {
+                if (each.isEmpty()) {
+                    continue;
+                } else if (each.equals("..")) {
+                    if (st.isEmpty()) {
+                        continue;
+                    }
+                    st.pop();
+                } else if (each.equals(".")) {
+                    continue;
+                } else {
+                    st.push(each);
+                }
             }
+
+            StringBuilder sb = new StringBuilder();
+
+            if (st.isEmpty())
+                sb.append("/");
+
+            for(String each : st) {
+                sb.append("/");
+                sb.append(each);
+            }
+
+            return sb.toString();
         }
-        final String res = s.toString();
-        return res;
     }
 
     public static void main(final String[] args) {

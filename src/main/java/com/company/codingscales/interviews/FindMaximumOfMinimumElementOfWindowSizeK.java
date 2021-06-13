@@ -11,7 +11,7 @@ public class FindMaximumOfMinimumElementOfWindowSizeK {
         int res = Integer.MIN_VALUE;
         for (int i = 0; i < length; i++) {
 
-            //while we pass through th earray at every step we need to check 2 things
+            //while we pass through the array at every step we need to check 2 things
             //1. if a[i] > q.peekLast(), then we poll and add the larger number
             while (!deque.isEmpty() && nums[i] < nums[deque.peekLast()]) {
                 deque.pollLast();

@@ -5,7 +5,7 @@ import java.util.*;
 public class NetworkDelayTime {
     // Dijkstra's algorithm
     public int networkDelayTime(int[][] times, int N, int K) {
-        Map<Integer, List<int[]>> graph = new HashMap();
+        Map<Integer, List<int[]>> graph = new HashMap<>();
         for (int[] edge : times) {
             if (!graph.containsKey(edge[0]))
                 graph.put(edge[0], new ArrayList<int[]>());
@@ -15,7 +15,7 @@ public class NetworkDelayTime {
                 (info1, info2) -> info1[0] - info2[0]);
         heap.offer(new int[]{0, K});
 
-        Map<Integer, Integer> dist = new HashMap();
+        Map<Integer, Integer> dist = new HashMap<>();
 
         while (!heap.isEmpty()) {
             int[] info = heap.poll();

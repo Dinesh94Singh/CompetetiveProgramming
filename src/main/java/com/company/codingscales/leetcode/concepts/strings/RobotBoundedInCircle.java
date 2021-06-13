@@ -66,8 +66,10 @@ public class RobotBoundedInCircle {
 
         if (x == 0 && y == 0)
             return true;
-        if (directions.equals("North"))
+        if (directions.equals("North")) // y ? The same pattern will be going to run again & again. When It reaches the same point, then it means its a cycle
             return false;
         return true;
+
+
     }
 }

@@ -54,8 +54,9 @@ public class AccountsMerge {
             for(final String email : account) {
                 if (!emailToId.containsKey(email)) {
                     emailToId.put(email, id++);
-                    uf.union(emailToId.get(email), emailToId.get(account.get(0)));
                 }
+
+                uf.union(emailToId.get(email), emailToId.get(account.get(0)));
                 emailToName.put(email, name);
             }
         }
