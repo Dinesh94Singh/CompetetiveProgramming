@@ -8,10 +8,10 @@ public class NetworkDelayTime {
         Map<Integer, List<int[]>> graph = new HashMap<>();
         for (int[] edge : times) {
             if (!graph.containsKey(edge[0]))
-                graph.put(edge[0], new ArrayList<int[]>());
+                graph.put(edge[0], new ArrayList<>());
             graph.get(edge[0]).add(new int[]{edge[1], edge[2]});
         }
-        PriorityQueue<int[]> heap = new PriorityQueue<int[]>(
+        PriorityQueue<int[]> heap = new PriorityQueue<>(
                 (info1, info2) -> info1[0] - info2[0]);
         heap.offer(new int[]{0, K});
 

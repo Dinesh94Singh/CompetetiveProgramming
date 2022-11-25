@@ -18,4 +18,16 @@ public class HouseRobber {
 
         return dp[N - 1];
     }
+
+    public int robRedo(int[] A) {
+        int[] dp = new int[A.length + 1];
+        dp[0] = 0;
+        dp[1] = A[0];
+
+        for(int i = 2; i <= A.length; i++) {
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + A[i - 1]);
+        }
+
+        return dp[A.length];
+    }
 }

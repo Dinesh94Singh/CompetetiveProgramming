@@ -11,12 +11,12 @@ public class RectangleOverlap {
         int x2 = rec1[2];
         int y2 = rec1[3];
 
-        int a1 = rec2[0];
-        int b1 = rec2[1];
-        int a2 = rec2[2];
-        int b2 = rec2[3];
+        int x3 = rec2[0];
+        int y3 = rec2[1];
+        int x4 = rec2[2];
+        int y4 = rec2[3];
 
-        return (x2 > a1) && (y2 > b1) && (x1 < a2) && (y1 < b2);
+        return (x2 > x3) && (y2 > y3) && (x1 < x4) && (y1 < y4);
     }
 
     boolean canFormLine(int[] rec) {

@@ -40,6 +40,34 @@ public class JumpGame {
         return lastPos == 0;
     }
 
+    public boolean canJumpGreedy(int[] nums) {
+        int lastPos = nums.length - 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (i + nums[i] >= lastPos) {
+                lastPos = i;
+            }
+        }
+        return lastPos == 0;
+    }
+
+    public boolean canJumpDP(int[] nums) {
+        if (nums.length == 1)
+            return true;
+        boolean[] dp = new boolean[nums.length];
+        dp[0] = true;
+
+
+        for (int i = 1; i < dp.length; i++) {
+            int j = i - 1;
+
+            if (dp[i - 1] && j + nums[j] >= i) {
+                for (int k = i; k < Math.min(dp.length, j + nums[j] + 1); k++)
+                    dp[k] = true;
+            }
+        }
+
+        return dp[dp.length - 1];
+    }
     public static void main(final String[] args) {
         System.out.println(canJump(new int[]{2,3,1,1,4}));
     }

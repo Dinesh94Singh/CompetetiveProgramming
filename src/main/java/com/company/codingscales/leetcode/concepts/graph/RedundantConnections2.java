@@ -4,8 +4,7 @@ public class RedundantConnections2 {
     // directed graph
 
     public static int[] findRedundantDirectedConnection(int[][] edges) {
-        
-        return new int[]{-1, -1};
+        return new int[]{};
     }
 
     public static void main(String[] args) {

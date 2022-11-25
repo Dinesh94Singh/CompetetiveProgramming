@@ -3,6 +3,7 @@ package com.company.codingscales.leetcode.concepts.trees;
 import javafx.util.Pair;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class VerticalOrderTraversalOfBinaryTree {
     static class TreeNode {
@@ -97,5 +98,39 @@ public class VerticalOrderTraversalOfBinaryTree {
         }
 
         return output;
+    }
+}
+
+
+class Solution {
+    TreeMap<Integer, ArrayList<Pair<Integer, Integer>>> map = new TreeMap<>();
+
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        dfs(root, 0, 0);
+        // System.out.println(map);
+        List<List<Integer>> res = new ArrayList<>();
+        for(Map.Entry<Integer, ArrayList<Pair<Integer, Integer>>> entry : map.entrySet()) {
+            List<Pair<Integer, Integer>> v = entry.getValue();
+            Collections.sort(v, (a, b) -> {
+                return a.getKey() - b.getKey();
+            });
+
+            List<Integer> temp = new ArrayList<>();
+            v.stream().map(a -> a.getValue()).collect(Collectors.toList());
+        }
+        return res;
+    }
+
+    private void dfs(TreeNode root, int y, int x) {
+        if (root == null) {
+            return;
+        }
+
+
+        map.putIfAbsent(y, new ArrayList<>());
+        map.get(y).add(new Pair<>(x, root.val));
+
+        dfs(root.left, y - 1, x + 1);
+        dfs(root.right, y + 1, x + 1);
     }
 }

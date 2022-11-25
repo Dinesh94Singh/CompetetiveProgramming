@@ -1,8 +1,8 @@
 package com.company.codingscales.leetcode.concepts.linkedList;
 
 public class ListNode {
-    int val;
-    ListNode next;
+    public int val;
+    public ListNode next;
 
     ListNode(final int val) {
         this.val = val;

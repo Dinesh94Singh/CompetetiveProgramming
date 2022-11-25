@@ -12,51 +12,64 @@ import javafx.util.Pair;
 
 public class AnalyzeVisitPatterns {
     public List<String> mostVisitedPattern(String[] username, int[] timestamp, String[] website) {
-        HashMap<String, List<Pair<Integer, String>>> graph = new HashMap<>();
-        for (int i = 0; i < username.length; i++) {
-            String uname = username[i];
+        // pattern is always 3 words
+        // if user a visits 6 webpages - all possibilties should be used
+        
+        int n = username.length;
+        HashMap<String, List<Pair<Integer, String>>> map = new HashMap<>();
+            
+        for (int i = 0; i < n; i++) {
+            String name = username[i];
             int ts = timestamp[i];
             String ws = website[i];
-
-            graph.putIfAbsent(uname, new ArrayList<>());
-            graph.get(uname).add(new Pair<>(ts, ws));
+            
+            
+            map.putIfAbsent(name, new ArrayList<>());
+            map.get(name).add(new Pair<>(ts, ws));
         }
-
-        HashMap<String, Integer> map = new HashMap<>();
-
-        for (List<Pair<Integer, String>> list : graph.values()) {
-            list.sort((a, b) -> {
-                return a.getKey() - b.getKey(); // sort based on ts
+        
+        HashMap<String, Integer> counter = new HashMap<>();
+        
+        for (String key : map.keySet()) {
+            List<Pair<Integer, String>> list = map.get(key);
+            HashSet<String> seen = new HashSet<>();
+            
+            list.sort((a,b) -> {
+                return a.getKey() - b.getKey(); 
             });
-
-            HashSet<String> userVisitedPattern = new HashSet<>();
-
-            for (int i = 0; i < list.size() - 2; i++) {
-                for (int j = i + 1; j < list.size() - 1; j++) {
+            
+            for (int i = 0; i < list.size(); i++) {
+                for (int j = i + 1; j < list.size(); j++) {
                     for (int k = j + 1; k < list.size(); k++) {
-                        String sb = list.get(i).getValue() + "," + list.get(j).getValue() + "," + list.get(k).getValue();
-
-                        if (!userVisitedPattern.contains(sb)) {
-                            userVisitedPattern.add(sb);
-                            map.put(sb, map.getOrDefault(sb, 0) + 1);
+                        String pattern = list.get(i).getValue() + "#" + list.get(j).getValue() + "#" + list.get(k).getValue();
+                        
+                        if (!seen.contains(pattern)) {
+                            // user can visit the pattern only once
+                            counter.put(pattern, counter.getOrDefault(pattern, 0) + 1);
+                            seen.add(pattern);
                         }
                     }
                 }
             }
         }
-
-        int max = 0;
-        String key = "";
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            if (max < entry.getValue()) {
-                max = entry.getValue();
-                key = entry.getKey();
-            } else if (max == entry.getValue() && key.compareTo(entry.getKey()) > 0) {
-                key = entry.getKey();
+        
+        int best_val = 0;
+        String res = "";
+        for (Map.Entry<String, Integer> entry : counter.entrySet()) {
+            if (entry.getValue() > best_val) {
+                res = entry.getKey();
+                best_val = entry.getValue();
+            } else if (entry.getValue() == best_val) {
+                int cmp = res.compareTo(entry.getKey());
+                
+                if (cmp > 0) {
+                    res = entry.getKey();
+                }
             }
         }
-
-        String[] A = key.split(",");
-        return Arrays.stream(A).collect(Collectors.toList());
+        
+        if (best_val == 0)
+            return new ArrayList<>();
+        return Arrays.stream(res.split("#")).collect(Collectors.toList());
     }
 }

@@ -119,4 +119,38 @@ public class ReconstructItinerary {
 
         itinerary.findItinerary(path);
     }
+
+    static class EuclierianPath {
+        HashMap<String, LinkedList<String>> graph = new HashMap<>();
+        List<String> res = new ArrayList<>();
+
+        public List<String> findItinerary(List<List<String>> tickets) {
+            // Euclerian Path
+
+            for(List<String> t : tickets) {
+                String o = t.get(0);
+                String d = t.get(1);
+
+                graph.putIfAbsent(o, new LinkedList<>()); // ensures sorting order
+                graph.get(o).add(d);
+            }
+
+            for(List<String> v : graph.values())
+                Collections.sort(v);
+
+            dfs("JFK"); // if you don't know the starting position, you try each node and try to find the solution.
+            return res;
+        }
+
+        private void dfs(String city) {
+            if (graph.containsKey(city)) {
+                LinkedList<String> neis = graph.get(city);
+                while (!neis.isEmpty()) {
+                    String nei = neis.pollFirst();
+                    dfs(nei);
+                }
+            }
+            res.add(0, city);
+        }
+    }
 }

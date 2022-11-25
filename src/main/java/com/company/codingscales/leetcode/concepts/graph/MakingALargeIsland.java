@@ -20,13 +20,15 @@ public class MakingALargeIsland {
                 if (grid[i][j] == 1) {
                     // expand the island
                     int area = bfs(i, j, color, grid);
+
+                    // System.out.println("Area is " + area);
                     colorToSize.put(color, area);
                     color++;
                 }
             }
         }
 
-        int res = 0;
+        int res = colorToSize.getOrDefault(2, 0);
         for(int i = 0; i < R; i++) {
             for(int j = 0; j < C; j++) {
                 if (grid[i][j] == 0) {
@@ -40,8 +42,10 @@ public class MakingALargeIsland {
                             continue;
                         }
 
-                        neighbors.add(grid[x][y]);
+                        neighbors.add(grid[x][y]); // adds the color
                     }
+
+                    // System.out.println(neighbors);
 
                     int size = 1;
                     for(int p : neighbors) { // only unique colors
@@ -62,13 +66,12 @@ public class MakingALargeIsland {
 
         ArrayDeque<int[]> dq = new ArrayDeque<>();
         dq.offerLast(new int[]{i, j});
-
         grid[i][j] = color;
-        int size = 0;
 
+        int size = 1;
         while (!dq.isEmpty()) {
             int[] curr = dq.pollFirst();
-            size++; // you only add unique elements to dq
+
             for(int[] e : directions) {
                 int x = curr[0] + e[0];
                 int y = curr[1] + e[1];
@@ -77,6 +80,7 @@ public class MakingALargeIsland {
                     continue;
                 }
 
+                size++;
                 grid[x][y] = color;
                 dq.offerLast(new int[]{x, y});
             }
@@ -84,7 +88,6 @@ public class MakingALargeIsland {
 
         return size;
     }
-
     public static void main(String[] args) {
         MakingALargeIsland sol = new MakingALargeIsland();
         sol.largestIsland(new int[][]{{1, 0}, {0, 1}});

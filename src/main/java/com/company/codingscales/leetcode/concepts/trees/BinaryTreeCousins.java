@@ -34,6 +34,40 @@ public class BinaryTreeCousins {
         return false;
     }
 
+    int seen = -1;
+    boolean ans = false;
+
+
+    // use this
+    public boolean isCousinsDFS(TreeNode root, int x, int y) {
+        dfs(root, 0, x, y);
+        return ans;
+    }
+
+    private boolean dfs(TreeNode r, int depth, int x, int y) {
+        if (r == null)
+            return false;
+        if (seen != -1 && depth > seen)
+            return false;
+
+        if (r.val == x || r.val == y) {
+            if (seen == -1) {
+                seen = depth;
+                return true;
+            } else {
+                return seen == depth;
+            }
+        }
+
+        boolean left = dfs(r.left, depth + 1, x, y);
+        boolean right = dfs(r.right, depth + 1, x, y);
+
+        if (left && right && seen != depth + 1)
+            ans = true;
+
+        return left || right;
+    }
+
     public static void main(final String[] args) {
         final BinaryTreeCousins binaryTreeCousins = new BinaryTreeCousins();
         System.out.println(binaryTreeCousins.isCousins(LeetCodeInputHelpers.stringToTreeNode("[1,2,3,4]"), 2, 3));

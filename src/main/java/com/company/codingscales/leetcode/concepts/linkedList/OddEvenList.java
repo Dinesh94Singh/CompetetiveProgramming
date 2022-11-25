@@ -23,4 +23,33 @@ public class OddEvenList {
 
         return newHead.next;
     }
+
+    class SolutionRedo {
+        public ListNode oddEvenList(ListNode head) {
+            if (head == null)
+                return null;
+            ListNode even = head.next;
+
+            ListNode t1 = head;
+            ListNode t2 = head.next;
+            ListNode prev = null;
+
+            while (t2 != null) {
+                t1.next = t1.next != null ? t1.next.next : null;
+                t2.next = t2.next != null ? t2.next.next : null;
+
+                prev = t1;
+
+                t1 = t1.next;
+                t2 = t2.next;
+            }
+
+            if (t1 == null)
+                prev.next = even;
+            else
+                t1.next = even;
+
+            return head;
+        }
+    }
 }

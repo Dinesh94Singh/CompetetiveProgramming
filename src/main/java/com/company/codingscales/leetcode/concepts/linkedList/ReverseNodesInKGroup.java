@@ -13,7 +13,7 @@ public class ReverseNodesInKGroup {
             return head;
 
         ListNode newHead = reverse(head, K);
-        head.next = reverseKGroup(p1, K);
+        head.next = reverseKGroup(p1, K); // head becomes the tail
         return newHead;
     }
 

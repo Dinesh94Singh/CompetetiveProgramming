@@ -15,11 +15,20 @@ public class findMedianOfTwoSortedArrays {
 
         /**
          * Always get the max of leftHalfs and min of rightHalfs
-         *
          */
         while (lo <= hi) {
             int partX = (lo + (hi - lo) / 2);
             int partY = half - partX; // most important part
+
+            // why half - partX => if we have total 10 elements then, this can be divided into 11 partitions,
+            // empty (left), 10 right
+            // 1 (left), 9 right ...... 10 (left) | empty(right)
+
+            // if we divide the partition at i = 2 then left will have 2 else and right will have 8 els. We pick half of both first half and second half (binary search)
+            // (11 / 2) - i => 5 - 2 => 3 is where cut the second array -> 8 / 2 => 4.
+
+            // TELL THIS TO INTERVIEWER.
+            // right partition = (total length of right partition) / 2 => total length of both combined - no of element in first partition / 2
 
             int leftX = partX == 0 ? Integer.MIN_VALUE : nums1[partX - 1];
             int rightX  = partX == M ? Integer.MAX_VALUE : nums1[partX];

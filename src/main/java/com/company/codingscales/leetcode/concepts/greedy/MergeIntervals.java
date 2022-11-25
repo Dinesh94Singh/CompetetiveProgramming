@@ -50,3 +50,4 @@ public class MergeIntervals {
         return result;
     }
 }
+

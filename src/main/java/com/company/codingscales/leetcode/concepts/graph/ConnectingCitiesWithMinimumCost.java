@@ -15,7 +15,7 @@ public class ConnectingCitiesWithMinimumCost {
         }
 
         private int find(final int c1) {
-            if(parent[c1] != c1) {
+            if (parent[c1] != c1) {
                 this.parent[c1] = find(this.parent[c1]);
             }
             return parent[c1];
@@ -25,12 +25,14 @@ public class ConnectingCitiesWithMinimumCost {
             final int r1 = find(c1);
             final int r2 = find(c2);
 
-            if(r1 == r2) { return false; }
+            if (r1 == r2) {
+                return false;
+            }
             N -= 1;
-            if(this.rank[r1] == this.rank[r2]) {
+            if (this.rank[r1] == this.rank[r2]) {
                 this.parent[r2] = r1;
                 this.rank[r1] += 1;
-            } else if(this.rank[r1] < this.rank[r2]) {
+            } else if (this.rank[r1] < this.rank[r2]) {
                 this.parent[r1] = r2;
             } else {
                 this.parent[r2] = r1;
@@ -45,7 +47,7 @@ public class ConnectingCitiesWithMinimumCost {
         Arrays.sort(connections, (a, b) -> (a[2] - b[2]));
         final UnionFind uf = new UnionFind(N);
         int res = 0;
-        for(final int[] each : connections) {
+        for (final int[] each : connections) {
             final int x = each[0];
             final int y = each[1];
 
@@ -53,17 +55,19 @@ public class ConnectingCitiesWithMinimumCost {
                 res += each[2];
             }
 
-            if (uf.N == 1) { break; }
+            if (uf.N == 1) {
+                break;
+            }
         }
 
         return N == 1 ? res : -1;
     }
 
     // Prim's using Heap
-    public int minimumCost(final int N, final int[][] connections) {
+    public int minimumCost(final int n, final int[][] connections) {
         // prims
         final Map<Integer, List<int[]>> graph = new HashMap<>();
-        final PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> a[2] - b[2]);
+        final PriorityQueue<int[]> heap = new PriorityQueue<>((a, b) -> a[1] - b[1]);
         final Set<Integer> visited = new HashSet<>();
         int costs = 0;
 
@@ -74,26 +78,26 @@ public class ConnectingCitiesWithMinimumCost {
 
             graph.computeIfAbsent(n1, (k) -> new ArrayList<>());
             graph.computeIfAbsent(n2, (k) -> new ArrayList<>());
-            graph.get(n1).add(new int[] {n2, cost});
-            graph.get(n2).add(new int[] {n1, cost});
+            graph.get(n1).add(new int[]{n2, cost});
+            graph.get(n2).add(new int[]{n1, cost});
         }
 
-        heap.add(new int[] {1, 1, 0});
+        heap.add(new int[]{1, 0});
         while (!heap.isEmpty()) {
             final int[] conn = heap.poll();
-            final int n1 = conn[0];
-            final int n2 = conn[1];
-            final int cost = conn[2];
 
-            if (!visited.contains(n2)) {
+            final int curr = conn[0];
+            final int cost = conn[1];
+
+            if (!visited.contains(curr)) {
                 costs += cost;
-                visited.add(n2);
-                for (final int[] next : graph.get(n2)) {
-                    heap.add(new int[] {n2, next[0], next[1]});
+                visited.add(curr);
+                for (final int[] next : graph.get(curr)) {
+                    heap.add(new int[]{next[0], next[1]});
                 }
             }
         }
 
-        return visited.size() == N ? costs : -1;
+        return visited.size() == n ? costs : -1;
     }
 }

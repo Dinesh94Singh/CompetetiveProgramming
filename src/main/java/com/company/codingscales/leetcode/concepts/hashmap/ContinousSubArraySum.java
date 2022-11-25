@@ -11,22 +11,28 @@ import java.util.HashMap;
  */
 public class ContinousSubArraySum {
     public static boolean checkSubarraySum(final int[] nums, final int k) {
-        final HashMap<Integer, Integer> map = new HashMap<>();
-        map.put(0, -1); // for case when target is 0 and there could be sum which leads to 0
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, -1); // [23, 2, 4, 6, 6] (total = 7) => true
+
         int sum = 0;
+
         for(int i = 0; i < nums.length; i++) {
-            sum += nums[i];
-            int remainder = sum;
+            int a = nums[i];
+
+
+            sum += a;
             if (k != 0) {
-                remainder = sum % k;
+                sum %= k;
             }
 
-            if (map.containsKey(remainder)) {
-                // adding these 2 will add to k, and its size should be greater than or equal to 2
-                if (i - map.get(remainder) > 1)
+            if (map.containsKey(sum)) {
+                int idx = map.get(sum);
+
+                if (i - idx > 1) {
                     return true;
+                }
             } else {
-                map.put(sum, i); // put the index
+                map.put(sum, i);
             }
         }
 

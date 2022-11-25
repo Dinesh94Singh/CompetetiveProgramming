@@ -81,41 +81,36 @@ public class WordBreak2 {
 
         // prefer this a lot
         public List<String> wordBreak(String s, List<String> wordDict) {
-//            unnecessary bull shit
-//            HashSet<Character> stringCharSet = new HashSet<Character>();
-//            updateCharSet(s, stringCharSet);
-//
-//            HashSet<Character> wordCharSet = new HashSet<>();
-//            wordSet = new HashSet<>();
-//            for (String word : wordDict) {
-//                wordSet.add(word);
-//                updateCharSet(word, wordCharSet);
-//            }
-//
-//            // quick check on the sets of characters
-//            if (!wordCharSet.containsAll(stringCharSet))
-//                return new ArrayList();
+            List<List<String>> dp = new ArrayList<>(s.length() + 1);
+            Set<String> words = new HashSet<>(wordDict);
 
-            Set<String> wordSet = new HashSet<>(wordDict);
-            ArrayList<ArrayList<String>> dp = new ArrayList<>(s.length() + 1);
-            for (int i = 0; i < s.length() + 1; ++i)
+            for(int i = 0; i <= s.length(); i++)
                 dp.add(new ArrayList<>());
-            
+
             dp.get(0).add("");
 
-            for (int endIndex = 1; endIndex < s.length() + 1; ++endIndex) {
-                ArrayList<String> sublist = new ArrayList<String>();
+            for(int endIdx = 1; endIdx <= s.length(); endIdx++) {
+                List<String> sub = new ArrayList<>();
 
-                // fill up the values in the dp array.
-                for (int startIndex = 0; startIndex < endIndex; ++startIndex) {
-                    String word = s.substring(startIndex, endIndex);
-                    if (wordSet.contains(word))
-                        sublist.add(dp.get(startIndex).stream().map(String::valueOf).collect(Collectors.joining(" ")));
+                for(int startIdx = 0; startIdx < endIdx; startIdx++) {
+                    String w = s.substring(startIdx, endIdx);
+
+                    if (words.contains(w)) {
+                        for(String each : dp.get(startIdx)) {
+                            if (each.isEmpty()) {
+                                sub.add(w);
+                            } else {
+                                sub.add(each + " " + w);
+                            }
+                        }
+                    }
                 }
-                dp.set(endIndex, sublist);
+
+                // System.out.println(sub);
+                dp.set(endIdx, sub);
             }
 
-            return dp.get(s.length());
+            return dp.get(dp.size() - 1);
         }
     }
 

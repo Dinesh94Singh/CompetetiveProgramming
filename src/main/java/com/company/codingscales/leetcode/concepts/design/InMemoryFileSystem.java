@@ -79,7 +79,7 @@ public class InMemoryFileSystem {
             if (curr.nodes.containsKey(each)) {
                 curr = curr.nodes.get(each);
             } else {
-                curr.nodes.put(each, new Node(each, true));
+                curr.nodes.put(each, new Node(each, i == dirs.length - 1));
                 curr = curr.nodes.get(each);
             }
         }
