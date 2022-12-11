@@ -27,21 +27,23 @@ public class LongestPalindromicSubsequence {
     }
 
     static int lps(String s) {
-        dp = new Integer[s.length()][s.length()];
-        return dfs(0, s.length() - 1, s);
+        int n = s.length();
+        dp = new Integer[n][n];
+        return dfs(0, n - 1, s);
     }
 
     static int lpsBottomUp(String s) {
+        int n = s.length();
         if (s.isEmpty())
             return 0;
-        int[][] dp = new int[s.length()][s.length()];
-        for(int i = 0; i < s.length() - 1; i++) {
+        int[][] dp = new int[n][n];
+        for(int i = 0; i < n - 1; i++) {
             dp[i][i] = 1;
         }
 
         int ans = 1;
-        for(int i = s.length() - 1; i >= 0; i--) {
-            for(int j = i + 1; j < s.length(); j++) {
+        for(int i = n - 1; i >= 0; i--) {
+            for(int j = i + 1; j < n; j++) {
                 if (s.charAt(i) == s.charAt(j)) {
                     dp[i][j] = 2 + dp[i + 1][j - 1];
                     ans = Math.max(ans, dp[i][j]);
@@ -51,6 +53,6 @@ public class LongestPalindromicSubsequence {
             }
         }
         return ans;
-        // return dp[0][s.length() - 1];
+        // return dp[0][n - 1];
     }
 }

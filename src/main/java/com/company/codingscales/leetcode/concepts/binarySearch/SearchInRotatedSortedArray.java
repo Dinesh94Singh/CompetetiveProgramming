@@ -41,7 +41,7 @@ public class SearchInRotatedSortedArray {
         return lo;
     }
 
-    private int binarySearch(int[] A, int start, int end, int target) {
+    private int binarySearch(int[] A, int start, int end, int target) { // need to do, binary search twice.
         while (start <= end && start < A.length) {
             int mid = (start + (end - start) / 2);
             if (A[mid] == target)
@@ -52,6 +52,35 @@ public class SearchInRotatedSortedArray {
                 start = mid + 1;
         }
 
+        return -1;
+    }
+
+
+    // NOTE: USE THIS SOLUTION
+    public int search_single_binary_search(int[] A, int target) {
+        int lo = 0, hi = A.length - 1;
+        int mid = 0;
+        while (lo <= hi) {
+            mid = lo + (hi - lo) / 2;
+
+            if (A[mid] == target) {
+                return mid;
+            }
+
+            if (A[lo] <= A[mid]) { // lo ... mid is sorted
+                if (A[lo] <= target && target < A[mid]) {
+                    hi = mid - 1;
+                } else {
+                    lo = mid + 1;
+                }
+            } else { // mid + 1 ... hi is sorted
+                if (A[mid] <= target && target <= A[hi]) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid - 1;
+                }
+            }
+        }
         return -1;
     }
 }

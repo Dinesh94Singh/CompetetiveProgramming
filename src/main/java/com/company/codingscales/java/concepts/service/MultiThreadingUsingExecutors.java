@@ -31,7 +31,7 @@ public class MultiThreadingUsingExecutors {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        ExecutorService executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
         List<Future<Integer>> resultList = new ArrayList<>();
 

@@ -107,45 +107,52 @@ public class AllNodesDistanceKInBinaryTree {
         dfs(r.right, t, k, length + 1);
     }
 
-    List<Integer> ans = new ArrayList<>();
+    class AnotherSolution {
+        public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+            List<Integer> res = new LinkedList<>();
+            if (K == 0) {
+                res.add(target.val);
+            } else {
+                dfs(res, root, target.val, K ,0);
+            }
+            return res;
+        }
 
-    public List<Integer> distanceKNoExtraSpace(TreeNode r, TreeNode t, int k) {
-        dfs2(r, t, k, 0);
-        return ans;
-    }
-    // combines the above 2 rec fns
-    private int dfs2(TreeNode r, TreeNode t, int k, int length) {
-        if (r == null)
+        private int dfs(List<Integer> res, TreeNode node, int target, int K, int depth) {
+            if (node == null) return 0;
+
+            if (depth == K) {
+                res.add(node.val);
+                return 0;
+            }
+
+            int left, right;
+            if (node.val == target || depth > 0) {
+                left = dfs(res, node.left, target, K, depth + 1);
+                right = dfs(res, node.right, target, K, depth + 1);
+            } else {
+                left = dfs(res, node.left, target, K, depth);
+                right = dfs(res, node.right, target, K, depth);
+            }
+
+            if (node.val == target) return 1;
+
+            if (left == K || right == K) {
+                res.add(node.val);
+                return 0;
+            }
+
+            if (left > 0) {
+                dfs(res, node.right, target, K, left + 1);
+                return left + 1;
+            }
+
+            if (right > 0) {
+                dfs(res, node.left, target, K, right + 1);
+                return right + 1;
+            }
+
             return 0;
-
-        if (length == k) {
-            ans.add(r.val);
-            return 0;
         }
-
-        int t1, t2;
-
-        if (r.val == t.val || length > 0) {
-            t1 = dfs2(r.left, t, k, length + 1); // add all left sub-tree
-            t2 = dfs2(r.right, t, k, length + 1); // add all right sub-tree
-        } else {
-            t1 = dfs2(r.left, t, k, length); // when child tree has the target, t1 becomes +ve
-            t2 = dfs2(r.right, t, k, length); // when child tree has the target, t2 becomes +ve
-        }
-
-        if (r.val == t.val)
-            return 1;
-
-        if (t1 > 0) { // from left child tree, we are t1 distance apart
-            dfs2(r.right, t, k, t1 + 1);
-            return t1 + 1;
-        }
-
-        if (t2 > 0) { // from right child tree, we are t2 distance apart
-            dfs2(r.left, t, k, t2 + 1);
-            return t2 + 1;
-        }
-
-        return 0;
     }
 }
