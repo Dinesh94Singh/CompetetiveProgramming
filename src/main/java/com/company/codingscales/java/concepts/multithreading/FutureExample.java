@@ -22,6 +22,9 @@ public class FutureExample {
         };
 
         Future<Integer> f = threadPool.submit(sumTask);
+        threadPool.submit(() -> {
+           // this is a task;
+        });
         return f.get();
     }
 }

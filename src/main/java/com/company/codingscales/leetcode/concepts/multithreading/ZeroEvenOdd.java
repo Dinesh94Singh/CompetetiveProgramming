@@ -7,7 +7,7 @@ public class ZeroEvenOdd {
     private boolean isodd = true;
     private boolean iseven = false;
 
-    private Object lock = new Object();
+    private final Object lock = new Object();
 
     public ZeroEvenOdd(int n) {
         this.n = n;

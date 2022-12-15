@@ -1,5 +1,8 @@
 package com.company.codingscales.leetcode.concepts.multithreading;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class DesignBlockingQueue {
     public static void main(String args[]) throws Exception {
         final BlockingQueue<Integer> q = new BlockingQueue<Integer>(5);
@@ -61,6 +64,20 @@ public class DesignBlockingQueue {
 
 // The blocking queue class
 class BlockingQueue<T> {
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof BlockingQueue<?> that)) return false;
+
+        return new EqualsBuilder().append(size, that.size).append(capacity, that.capacity).append(head, that.head).append(tail, that.tail).append(array, that.array).append(lock, that.lock).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(array).append(lock).append(size).append(capacity).append(head).append(tail).toHashCode();
+    }
 
     T[] array;
     Object lock = new Object();
