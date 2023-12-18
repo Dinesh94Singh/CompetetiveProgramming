@@ -18,14 +18,15 @@ public class Trie {
             this.word = null;
         }
     }
+
     TrieNode root;
 
-    Trie(){
-       root = new TrieNode(null);
+    Trie() {
+        root = new TrieNode(null);
     }
 
     private boolean dfs(final String word, TrieNode node) {
-        if(word.isEmpty() && node.isEnd) {
+        if (word.isEmpty() && node.isEnd) {
             return true;
         }
 
@@ -40,10 +41,10 @@ public class Trie {
 
     private void buildTrie(final ArrayList<String> words) {
         TrieNode node;
-        for(final String word: words) {
+        for (final String word : words) {
             node = this.root;
-            for(final char ch: word.toCharArray()) {
-               node = node.children.getOrDefault(ch, new TrieNode(ch));
+            for (final char ch : word.toCharArray()) {
+                node = node.children.getOrDefault(ch, new TrieNode(ch));
             }
             node.isEnd = true;
             node.word = word;
