@@ -1,25 +1,21 @@
 package com.company.codingscales.leetcode.concepts.trees;
 
 public class MaximumDifferenceBetweenNodeAndAncestor {
-    int res = Integer.MIN_VALUE;
-    void dfs(TreeNode root, int min, int max) {
+    int res = 0;
+    private void dfs(TreeNode root, int min, int max) {
         if (root == null) {
-            res = Math.max(res, max - min);
             return;
         }
 
-        max = Math.max(max, root.val);
-        min = Math.min(min, root.val);
+        res = Math.max(res, Math.abs(min - root.val));
+        res = Math.max(res, Math.abs(max - root.val));
 
-        dfs(root.left, min, max);
-        dfs(root.right, min, max);
+
+        dfs(root.left, Math.min(min, root.val), Math.max(max, root.val));
+        dfs(root.right, Math.min(min, root.val), Math.max(max, root.val));
     }
-
     public int maxAncestorDiff(TreeNode root) {
-        if (root == null)
-            return 0;
-
         dfs(root, root.val, root.val);
-        return res == Integer.MIN_VALUE ? -1 : res;
+        return res;
     }
 }
