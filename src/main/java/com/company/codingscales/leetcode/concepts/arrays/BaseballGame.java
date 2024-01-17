@@ -1,6 +1,8 @@
 package com.company.codingscales.leetcode.concepts.arrays;
 
+import java.util.Arrays;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class BaseballGame {
     static int calPoints(final String[] ops) {
@@ -28,6 +30,9 @@ public class BaseballGame {
                     break;
             }
         }
+
+        int[][] meetings = new int[10][10];
+        String res = Arrays.stream(meetings).map(Arrays::toString).collect(Collectors.joining(","));
 
         return st.stream().reduce(0, Integer::sum);
     }
