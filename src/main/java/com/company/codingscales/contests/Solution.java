@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class Solution {
 
@@ -45,12 +46,12 @@ public class Solution {
 
         /**
         {
-            "A": [{req1, x_ts}, {req3, y_ts}] 
+            "A": [{req1, x_ts}, {req3, y_ts}]
             "B": [],
         }
 
         // milliseconds as a factor - System.getCurrentMillis() -> milliseconds - Support implemented
-        
+
         // Main Thread - pause/resume of threads is not controllable
             // s.rateLimit() -> 10sec ts
             // s.rateLimit() -> 10sec ts
@@ -63,7 +64,7 @@ public class Solution {
 
         // to similate 30 sec have passed - timeStamp += 30 => Thread.sleep(3 * 1000) => doesn't guarantee to be preciesly 30 secs
 
-        
+
 
         // Returns false
 
@@ -97,7 +98,7 @@ public class Solution {
 
         // Move forward in time by 30 sec in each request
 
-        
+
         /** {
             1435 - [{12, 1], {42, 1}} 42 - 12 => 30 (before 30)
         } **/
@@ -105,7 +106,7 @@ public class Solution {
         timeStamp += 30; // ts - 42
         System.out.println(s.rateLimit("my_device_1435", 300, 1)); // true // time passed is only 30 sec, 300 sec
                                                                    // intervals with max requests allowed 1 - so
-        
+
         // ts - 43                                                           // rate-limited
         timeStamp += 30; // ts - 73 - 42 =? 31
         System.out.println(s.rateLimit("my_device_1435", 300, 1)); // true
