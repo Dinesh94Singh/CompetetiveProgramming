@@ -1,0 +1,38 @@
+class DNASequenceAnagrams { 
+  public static List<Boolean> getSequence(List<List<String>> dna) {
+        List<Boolean> results = new ArrayList<>();
+        
+        for (List<String> pair : dna) {
+            String dna1 = pair.get(0);
+            String dna2 = pair.get(1);
+            
+            if (isSpecialPair(dna1, dna2)) {
+                results.add(true);
+            } else {
+                results.add(false);
+            }
+        }
+        
+        return results;
+    }
+    
+    private static boolean isSpecialPair(String dna1, String dna2) {
+        int[] frequency1 = new int[26];
+        int[] frequency2 = new int[26];
+        
+        for (char c : dna1.toCharArray()) {
+            frequency1[c - 'a']++;
+        }
+        
+        for (char c : dna2.toCharArray()) {
+            frequency2[c - 'a']++;
+        }
+        
+        int diffCount = 0;
+        for (int i = 0; i < 26; i++) {
+            diffCount += Math.abs(frequency1[i] - frequency2[i]);
+        }
+        
+        return diffCount <= 2;
+    }
+}
